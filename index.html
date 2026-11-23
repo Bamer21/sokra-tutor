@@ -654,11 +654,20 @@
 
         function getGeminiEndpoint(model, key) {
             const cleanKey = (key || '').trim();
+            // Kunci format baharu Google AI Studio / Vertex Express bermula dengan "AQ."
+            if (cleanKey.startsWith('AQ.')) {
+                return {
+                    url: `https://aiplatform.googleapis.com/v1/publishers/google/models/${model}:generateContent?key=${encodeURIComponent(cleanKey)}`,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+            }
+            // Kunci standard Google AI Studio bermula dengan "AIza"
             return {
                 url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(cleanKey)}`,
                 headers: {
-                    'Content-Type': 'application/json',
-                    'x-goog-api-key': cleanKey
+                    'Content-Type': 'application/json'
                 }
             };
         }
