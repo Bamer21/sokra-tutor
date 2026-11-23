@@ -517,10 +517,10 @@
 
         // =========================================================================
         // 1. TETAPAN PRODUKSI (GITHUB + FIREBASE + GEMINI AI)
-        // Kunci Gemini API dibaca secara selamat daripada Firestore dokumen config/gemini
+        // Kunci Gemini API dimasukkan terus untuk penggunaan segera
         // =========================================================================
         const SOKRA_CONFIG = {
-            geminiApiKey: "",
+            geminiApiKey: "AQ.Ab8RN6KjcKQln0YzI7OhOThk0VSppixdnAruOjtTbdmdJYxpyQ",
             firebaseConfig: {
                 apiKey: "AIzaSyDmFKSMSNb4vrkwWDb8FZofVgibAgXVCBU",
                 authDomain: "sokra-tutor.firebaseapp.com",
@@ -535,10 +535,7 @@
         let apiKey = SOKRA_CONFIG.geminiApiKey || "";
 
         function getGeminiEndpoint(modelName, key) {
-            if (key && key.startsWith('AQ.')) {
-                return `https://aiplatform.googleapis.com/v1/publishers/google/models/${modelName}:generateContent?key=${key}`;
-            }
-            return `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`;
+            return `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(key)}`;
         }
 
         function refreshIcons() {
@@ -1262,7 +1259,10 @@ Personaliti & Gaya Mengajar WAJIB:
                 try {
                     const response = await fetch(url, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-goog-api-key': apiKey
+                        },
                         body: JSON.stringify(payload)
                     });
                     if (!response.ok) {
