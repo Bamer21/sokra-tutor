@@ -710,7 +710,7 @@
         const DEFAULT_ADMIN_PASSWORD = 'admin123';
 
         let sharedCloudApiKey = '';
-        let activeGeminiModel = localStorage.getItem(LOCAL_ACTIVE_MODEL_STORAGE) || 'gemini-2.5-flash';
+        let activeGeminiModel = localStorage.getItem(LOCAL_ACTIVE_MODEL_STORAGE) || 'gemini-3-flash-preview';
         let isAdminAuthenticated = false;
         let isCloudConfigLoaded = false;
 
@@ -970,7 +970,7 @@
         }
 
         async function discoverWorkingModel(candidateKey) {
-            // Semak senarai model sebenar yang aktif pada kunci ini jika kunci bermula dengan AIza
+            // Semak senarai model sebenar yang aktif pada kunci ini daripada Google API
             if (candidateKey.startsWith('AIza')) {
                 try {
                     const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(candidateKey)}`);
@@ -979,15 +979,24 @@
                         const models = (listData.models || [])
                             .filter(m => (m.supportedGenerationMethods || []).includes('generateContent'))
                             .map(m => m.name.replace('models/', ''));
-                        const preferred = ['gemini-2.5-flash', 'gemini-2.5-pro', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+                        const preferred = [
+                            'gemini-3-flash-preview',
+                            'gemini-3.1-flash-lite-preview',
+                            'gemini-3-pro-preview',
+                            'gemini-2.5-flash-lite',
+                            'gemini-2.5-flash',
+                            'gemini-2.0-flash'
+                        ];
                         for (const p of preferred) {
                             if (models.includes(p)) return p;
                         }
+                        const flashMatch = models.find(m => m.includes('flash') && !m.includes('image') && !m.includes('tts'));
+                        if (flashMatch) return flashMatch;
                         if (models.length) return models[0];
                     }
                 } catch (e) {}
             }
-            return 'gemini-2.5-flash';
+            return 'gemini-3-flash-preview';
         }
 
         async function testAndSaveAdminKey() {
@@ -1012,9 +1021,10 @@
                 const detectedModel = await discoverWorkingModel(candidateKey);
                 const attempts = [
                     { model: detectedModel, vertex: false },
-                    { model: 'gemini-2.5-flash', vertex: false },
-                    { model: 'gemini-2.0-flash', vertex: false },
-                    { model: 'gemini-2.5-flash', vertex: true }
+                    { model: 'gemini-3-flash-preview', vertex: false },
+                    { model: 'gemini-3.1-flash-lite-preview', vertex: false },
+                    { model: 'gemini-2.5-flash-lite', vertex: false },
+                    { model: 'gemini-3-flash-preview', vertex: true }
                 ];
                 let connected = false;
                 let verifiedModel = detectedModel;
@@ -1683,10 +1693,11 @@
             }
 
             const attempts = [
-                { model: activeGeminiModel || 'gemini-2.5-flash', vertex: false },
-                { model: 'gemini-2.5-flash', vertex: false },
-                { model: 'gemini-2.0-flash', vertex: false },
-                { model: 'gemini-2.5-flash', vertex: true }
+                { model: activeGeminiModel || 'gemini-3-flash-preview', vertex: false },
+                { model: 'gemini-3-flash-preview', vertex: false },
+                { model: 'gemini-3.1-flash-lite-preview', vertex: false },
+                { model: 'gemini-2.5-flash-lite', vertex: false },
+                { model: 'gemini-3-flash-preview', vertex: true }
             ];
             let lastError = null;
 
