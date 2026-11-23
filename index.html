@@ -582,11 +582,12 @@
                 }
                 lastApiError = "Dokumen config/gemini di Firestore tiada medan 'apiKey'.";
                 updateAiStatusIndicator(false, "Kunci API Tiada");
+                return false;
             } catch (err) {
-                lastApiError = `Ralat akses Firestore (${err.code || err.message}). Semak Firestore Rules & Anonymous Auth.`;
-                updateAiStatusIndicator(false, "Firestore Disekat");
+                lastApiError = `Ralat akses Firestore (config/gemini): ${err.message}`;
+                updateAiStatusIndicator(false, "Akses Firestore Disekat");
+                return false;
             }
-            return false;
         }
 
         async function initCloudStorage() {
@@ -1357,7 +1358,7 @@ Hasilkan 3 hingga 4 langkah pengajaran berurutan yang benar-benar mengajar dari 
                 }
             };
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+            const url = getGeminiEndpoint('gemini-2.5-flash', apiKey);
             const result = await fetchWithBackoff(url, payload);
             const rawText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
             if (!rawText) throw new Error("Tiada respons teks daripada model Gemini.");
@@ -1708,7 +1709,7 @@ Sertakan "boardNote" (jalan kerja / fakta tambahan tulisan tangan untuk ditambah
                 }
             };
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+            const url = getGeminiEndpoint('gemini-2.5-flash', apiKey);
             const result = await fetchWithBackoff(url, payload);
             const rawText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
             const parsed = JSON.parse(rawText);
@@ -1880,7 +1881,7 @@ Sertakan "boardNote" (jalan kerja / fakta tambahan tulisan tangan untuk ditambah
                         speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: char.ttsVoice } } }
                     }
                 };
-                const ttsUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+                const ttsUrl = getGeminiEndpoint('gemini-2.5-flash-preview-tts', apiKey);
                 const result = await fetchWithBackoff(ttsUrl, payload, 2);
                 const part = result?.candidates?.[0]?.content?.parts?.[0];
                 const audioData = part?.inlineData?.data;
