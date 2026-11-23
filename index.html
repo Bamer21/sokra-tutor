@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOKRA — Papan Putih AI Interaktif</title>
+    <title>SOKRA — Tutor Papan Putih AI Interaktif</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts: Inter & Font Tulisan Tangan Papan Putih -->
+    <!-- Google Fonts: Inter + Font Tulisan Tangan Papan Putih Ekspresif -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -22,81 +22,97 @@
             background-color: #f8fafc;
             color: #0f172a;
         }
-        .font-handwriting { font-family: 'Caveat', cursive; }
-        .font-marker { font-family: 'Patrick Hand', cursive; }
+        /* Tipografi Tulisan Tangan Papan Putih Sebenar */
+        .wb-title-font { font-family: 'Caveat', cursive; }
+        .wb-hand-font { font-family: 'Kalam', cursive; }
+        .wb-note-font { font-family: 'Architects Daughter', cursive; }
 
-        /* Corak grid papan putih bersih */
-        .whiteboard-surface {
+        /* Permukaan Papan Putih Halus Seperti AhaBoard */
+        .whiteboard-canvas-bg {
             background-color: #ffffff;
             background-image:
-                linear-gradient(to right, rgba(226, 232, 240, 0.45) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(226, 232, 240, 0.45) 1px, transparent 1px);
-            background-size: 24px 24px;
+                radial-gradient(rgba(148, 163, 184, 0.22) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
-        /* Animasi lukisan SVG pen secara langsung */
-        @keyframes drawStroke {
-            0% { stroke-dashoffset: 1200; opacity: 0.2; }
+        /* Animasi Lukisan Pen SVG Garis Demi Garis */
+        @keyframes strokeReveal {
+            0% { stroke-dashoffset: 1600; opacity: 0.15; }
             100% { stroke-dashoffset: 0; opacity: 1; }
         }
-        .svg-hand-stroke path,
-        .svg-hand-stroke line,
-        .svg-hand-stroke circle,
-        .svg-hand-stroke rect,
-        .svg-hand-stroke ellipse,
-        .svg-hand-stroke polyline,
-        .svg-hand-stroke polygon {
-            stroke-dasharray: 1200;
+        .aha-svg-draw path,
+        .aha-svg-draw line,
+        .aha-svg-draw circle,
+        .aha-svg-draw rect,
+        .aha-svg-draw ellipse,
+        .aha-svg-draw polyline,
+        .aha-svg-draw polygon {
+            stroke-dasharray: 1600;
             stroke-dashoffset: 0;
-            animation: drawStroke 1.1s ease-out forwards;
+            animation: strokeReveal 1.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
-        /* Kursor pen berkelip semasa menulis */
-        @keyframes penBob {
-            0%, 100% { transform: translateY(0px) rotate(-12deg); }
-            50% { transform: translateY(-4px) rotate(4deg); }
+        /* Sorotan Pen Stabilo Kuning/Biru Pada Kata Kunci */
+        .marker-highlight-yellow {
+            background: linear-gradient(104deg, rgba(254, 240, 138, 0) 0.9%, rgba(254, 240, 138, 0.95) 2.4%, rgba(254, 240, 138, 0.65) 5.8%, rgba(254, 240, 138, 0.9) 93%, rgba(254, 240, 138, 0.4) 98%, rgba(254, 240, 138, 0) 100%);
+            padding: 0.05em 0.3em;
+            border-radius: 0.25em;
         }
-        .writing-pen-cursor {
+        .marker-highlight-blue {
+            background: linear-gradient(104deg, rgba(191, 219, 254, 0) 0.9%, rgba(191, 219, 254, 0.85) 2.4%, rgba(191, 219, 254, 0.6) 93%, rgba(191, 219, 254, 0) 100%);
+            padding: 0.05em 0.3em;
+            border-radius: 0.25em;
+        }
+
+        /* Animasi Pen Bergerak Semasa Menulis */
+        @keyframes penWriteMotion {
+            0%, 100% { transform: translate(0px, 0px) rotate(-14deg); }
+            25% { transform: translate(3px, -4px) rotate(-4deg); }
+            50% { transform: translate(6px, 1px) rotate(-16deg); }
+            75% { transform: translate(2px, -3px) rotate(-6deg); }
+        }
+        .live-marker-nib {
             display: inline-block;
-            animation: penBob 0.45s infinite ease-in-out;
+            animation: penWriteMotion 0.35s infinite ease-in-out;
         }
 
-        /* Animasi mulut kartun bercakap */
-        @keyframes mouthTalk {
+        /* Animasi Mulut Maskot Bercakap & Gelombang Suara */
+        @keyframes mouthSpeak {
             0%, 100% { transform: scaleY(0.35); }
-            50% { transform: scaleY(1.25); }
+            50% { transform: scaleY(1.3); }
         }
         .mascot-speaking .mascot-mouth {
             transform-origin: center;
-            animation: mouthTalk 0.24s infinite ease-in-out;
+            animation: mouthSpeak 0.22s infinite ease-in-out;
         }
 
-        @keyframes floatMascot {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-4px); }
+        @keyframes soundWave {
+            0%, 100% { height: 6px; }
+            50% { height: 18px; }
         }
-        .mascot-idle {
-            animation: floatMascot 3.2s ease-in-out infinite;
-        }
-
-        @keyframes pulseRing {
-            0% { transform: scale(0.95); opacity: 0.7; }
-            70% { transform: scale(1.25); opacity: 0; }
-            100% { transform: scale(0.95); opacity: 0; }
-        }
-        .mic-pulse::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
+        .wave-bar {
+            width: 3px;
+            background-color: #4f46e5;
             border-radius: 9999px;
-            background-color: rgba(239, 68, 68, 0.35);
-            animation: pulseRing 1.3s infinite;
+            animation: soundWave 0.6s infinite ease-in-out;
+        }
+        .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.45s; }
+
+        @keyframes micGlow {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.55); }
+            70% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .mic-listening-active {
+            animation: micGlow 1.3s infinite;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-indigo-100 selection:text-indigo-900">
 
-    <!-- ==================== HEADER / NAVIGASI ==================== -->
+    <!-- ==================== BAR NAVIGASI ATAS ==================== -->
     <header class="w-full max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-2">
         <a href="#" class="flex items-center gap-2.5 group shrink-0">
             <div class="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
@@ -108,18 +124,18 @@
             </div>
             <div>
                 <span class="font-extrabold text-xl tracking-tight text-slate-900">SOKRA</span>
-                <span class="hidden sm:inline-block ml-1.5 px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-[10px] font-bold uppercase tracking-wider">Tutor AI</span>
+                <span class="hidden sm:inline-block ml-1.5 px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-[10px] font-bold uppercase tracking-wider">Papan Putih AI</span>
             </div>
         </a>
 
         <div class="flex items-center gap-2 flex-wrap justify-end">
-            <!-- Status Sambungan AI -->
-            <div id="aiConnectionBadge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[11px] font-medium">
-                <span id="aiStatusDot" class="w-2 h-2 rounded-full bg-amber-500"></span>
-                <span id="aiStatusText">Menyemak AI...</span>
+            <!-- Status Sambungan AI (Pelajar hanya nampak "Tutor AI Aktif" apabila kunci Admin sudah live) -->
+            <div id="aiConnectionBadge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[11px] font-medium">
+                <span id="aiStatusDot" class="w-2 h-2 rounded-full bg-slate-400 animate-pulse"></span>
+                <span id="aiStatusText">Menyambung Tutor AI...</span>
             </div>
 
-            <!-- Pemilih Bahasa -->
+            <!-- Pemilih Bahasa Pengajaran -->
             <div class="relative inline-flex items-center">
                 <i data-lucide="globe" class="w-3.5 h-3.5 text-slate-500 absolute left-2.5 pointer-events-none"></i>
                 <select id="languageSelector" onchange="changeLanguage(this.value)" class="pl-7 pr-6 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700 shadow-2xs hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer appearance-none">
@@ -135,43 +151,41 @@
             <!-- Log Masuk Pelajar -->
             <div id="authSection">
                 <button type="button" onclick="openLoginModal()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-xs font-semibold text-slate-800 shadow-2xs transition-all cursor-pointer">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/>
-                        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/>
-                        <path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/>
-                        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/>
-                    </svg>
+                    <i data-lucide="user-circle" class="w-3.5 h-3.5 text-indigo-600"></i>
                     <span>Log Masuk</span>
                 </button>
             </div>
 
-            <!-- Butang Akses Admin -->
-            <button type="button" onclick="openAdminPortal()" id="headerAdminBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-2xs transition-all cursor-pointer" title="Akses Panel Admin untuk Urus API Key">
+            <!-- Butang Portal Admin -->
+            <button type="button" onclick="openAdminPortal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-2xs transition-all cursor-pointer" title="Akses Panel Admin untuk Urus API Key">
                 <i data-lucide="shield" class="w-3.5 h-3.5 text-amber-400"></i>
                 <span>Admin</span>
             </button>
         </div>
     </header>
 
-    <!-- ==================== KANDUNGAN UTAMA ==================== -->
-    <main class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-3 pb-14 flex flex-col items-center">
+    <!-- ==================== HALAMAN UTAMA (GAYA AHABOARD) ==================== -->
+    <main class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-16 flex flex-col items-center">
 
         <!-- Tajuk Hero -->
-        <div class="text-center max-w-2xl mx-auto mb-5 space-y-2">
-            <h1 id="heroTitle" class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                Apa yang anda ingin pelajari hari ini?
+        <div class="text-center max-w-2xl mx-auto mb-6 space-y-2.5">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold">
+                <span>✨ Dari “Hah?” ke “Aha!” di atas papan putih</span>
+            </div>
+            <h1 id="heroTitle" class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
+                Apa yang anda ingin kuasai hari ini?
             </h1>
-            <p id="heroSubtitle" class="text-xs sm:text-sm text-slate-500">
-                Pilih watak tutor kartun anda, taip topik atau muat naik nota — AI akan menulis, melukis &amp; menerangkan secara langsung.
+            <p id="heroSubtitle" class="text-xs sm:text-base text-slate-500 max-w-xl mx-auto">
+                Taip topik, muat naik gambar kerja rumah atau PDF nota — tutor AI akan melukis setiap langkah, menerangkan secara mendalam, dan berbual 2 hala bersama anda.
             </p>
         </div>
 
-        <!-- PEMILIHAN WATAK KARTUN -->
+        <!-- PEMILIHAN WATAK KARTUN TUTOR -->
         <div class="w-full mb-5">
             <div class="flex items-center justify-between mb-2 px-1">
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
-                    <span>Pilih Watak Kartun Tutor Anda</span>
+                    <span>Pilih Gaya &amp; Watak Tutor Anda</span>
                 </span>
                 <span id="selectedCharacterLabel" class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">
                     Aktif: Professor Genius
@@ -179,80 +193,76 @@
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5" id="characterCardsGrid">
-                <!-- Watak 1: Professor Genius -->
                 <button type="button" onclick="selectCharacter('genius')" data-char="genius" class="char-card active-char group relative flex flex-col items-center p-2.5 rounded-2xl bg-white border-2 border-indigo-600 shadow-sm text-center transition-all cursor-pointer">
                     <span class="char-badge absolute -top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-600 text-white">Dipilih</span>
-                    <div class="w-14 h-14 mb-1.5 rounded-2xl bg-indigo-50 flex items-center justify-center overflow-hidden" id="avatar-card-genius"></div>
+                    <div class="w-12 h-12 mb-1.5 rounded-2xl bg-indigo-50 flex items-center justify-center overflow-hidden" id="avatar-card-genius"></div>
                     <div class="text-xs font-bold text-slate-900">Professor Genius</div>
-                    <div class="text-[10px] text-slate-500 leading-tight mt-0.5">Teratur, jelas &amp; akademik</div>
+                    <div class="text-[10px] text-slate-500 leading-tight mt-0.5">Mendalam, teratur &amp; jelas</div>
                 </button>
 
-                <!-- Watak 2: Bro Chill -->
                 <button type="button" onclick="selectCharacter('chill')" data-char="chill" class="char-card group relative flex flex-col items-center p-2.5 rounded-2xl bg-white border border-slate-200 hover:border-emerald-400 shadow-2xs text-center transition-all cursor-pointer">
                     <span class="char-badge hidden absolute -top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-600 text-white">Dipilih</span>
-                    <div class="w-14 h-14 mb-1.5 rounded-2xl bg-emerald-50 flex items-center justify-center overflow-hidden" id="avatar-card-chill"></div>
+                    <div class="w-12 h-12 mb-1.5 rounded-2xl bg-emerald-50 flex items-center justify-center overflow-hidden" id="avatar-card-chill"></div>
                     <div class="text-xs font-bold text-slate-900">Bro Chill</div>
-                    <div class="text-[10px] text-slate-500 leading-tight mt-0.5">Santai, analogi harian &amp; kelakar</div>
+                    <div class="text-[10px] text-slate-500 leading-tight mt-0.5">Analogi santai &amp; mudah hadam</div>
                 </button>
 
-                <!-- Watak 3: Kapten Tegas -->
                 <button type="button" onclick="selectCharacter('strict')" data-char="strict" class="char-card group relative flex flex-col items-center p-2.5 rounded-2xl bg-white border border-slate-200 hover:border-rose-400 shadow-2xs text-center transition-all cursor-pointer">
                     <span class="char-badge hidden absolute -top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-600 text-white">Dipilih</span>
-                    <div class="w-14 h-14 mb-1.5 rounded-2xl bg-rose-50 flex items-center justify-center overflow-hidden" id="avatar-card-strict"></div>
+                    <div class="w-12 h-12 mb-1.5 rounded-2xl bg-rose-50 flex items-center justify-center overflow-hidden" id="avatar-card-strict"></div>
                     <div class="text-xs font-bold text-slate-900">Kapten Tegas</div>
-                    <div class="text-[10px] text-slate-500 leading-tight mt-0.5">Padat, disiplin &amp; terus ke poin</div>
+                    <div class="text-[10px] text-slate-500 leading-tight mt-0.5">Fokus markah &amp; perangkap exam</div>
                 </button>
 
-                <!-- Watak 4: Kakak Ceria -->
                 <button type="button" onclick="selectCharacter('cheerful')" data-char="cheerful" class="char-card group relative flex flex-col items-center p-2.5 rounded-2xl bg-white border border-slate-200 hover:border-amber-400 shadow-2xs text-center transition-all cursor-pointer">
                     <span class="char-badge hidden absolute -top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-white">Dipilih</span>
-                    <div class="w-14 h-14 mb-1.5 rounded-2xl bg-amber-50 flex items-center justify-center overflow-hidden" id="avatar-card-cheerful"></div>
+                    <div class="w-12 h-12 mb-1.5 rounded-2xl bg-amber-50 flex items-center justify-center overflow-hidden" id="avatar-card-cheerful"></div>
                     <div class="text-xs font-bold text-slate-900">Kakak Ceria</div>
-                    <div class="text-[10px] text-slate-500 leading-tight mt-0.5">Mesra, memberi semangat &amp; sabar</div>
+                    <div class="text-[10px] text-slate-500 leading-tight mt-0.5">Sabar, mesra &amp; membimbing</div>
                 </button>
 
-                <!-- Watak 5: Robo-Sains -->
                 <button type="button" onclick="selectCharacter('robot')" data-char="robot" class="char-card col-span-2 sm:col-span-1 group relative flex flex-col items-center p-2.5 rounded-2xl bg-white border border-slate-200 hover:border-cyan-400 shadow-2xs text-center transition-all cursor-pointer">
                     <span class="char-badge hidden absolute -top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-600 text-white">Dipilih</span>
-                    <div class="w-14 h-14 mb-1.5 rounded-2xl bg-cyan-50 flex items-center justify-center overflow-hidden" id="avatar-card-robot"></div>
+                    <div class="w-12 h-12 mb-1.5 rounded-2xl bg-cyan-50 flex items-center justify-center overflow-hidden" id="avatar-card-robot"></div>
                     <div class="text-xs font-bold text-slate-900">Robo-Sains</div>
-                    <div class="text-[10px] text-slate-500 leading-tight mt-0.5">Logik tajam, fakta pantas &amp; data</div>
+                    <div class="text-[10px] text-slate-500 leading-tight mt-0.5">Logik tepat, formula &amp; graf</div>
                 </button>
             </div>
         </div>
 
-        <!-- KOTAK INPUT UTAMA -->
-        <div class="w-full bg-white rounded-3xl border border-slate-200/90 shadow-lg shadow-slate-200/50 p-3 sm:p-4 transition-all">
+        <!-- KOTAK INPUT UTAMA DENGAN 3 MOD AHABOARD -->
+        <div class="w-full bg-white rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-200/50 p-3.5 sm:p-5 transition-all">
 
-            <!-- Tab Mod Pembelajaran -->
-            <div class="flex flex-wrap items-center gap-1.5 mb-2.5">
-                <button type="button" onclick="setHeroMode('Topic', this)" class="hero-mode-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-900 text-white transition-all cursor-pointer">
-                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
-                    <span>Topik</span>
-                </button>
-                <button type="button" onclick="setHeroMode('Homework', this)" class="hero-mode-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200/70 transition-all cursor-pointer">
-                    <i data-lucide="pen-tool" class="w-3.5 h-3.5"></i>
-                    <span>Kerja Rumah</span>
-                </button>
-                <button type="button" onclick="setHeroMode('Exam Prep', this)" class="hero-mode-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200/70 transition-all cursor-pointer">
-                    <i data-lucide="target" class="w-3.5 h-3.5"></i>
-                    <span>Persediaan Peperiksaan</span>
-                </button>
-                <button type="button" onclick="setHeroMode('Language', this)" class="hero-mode-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200/70 transition-all cursor-pointer">
-                    <i data-lucide="languages" class="w-3.5 h-3.5"></i>
-                    <span>Bahasa</span>
-                </button>
+            <!-- Tab Mod Pembelajaran AhaBoard -->
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <div class="flex flex-wrap items-center gap-1.5">
+                    <button type="button" onclick="setHeroMode('Topic', this)" class="hero-mode-btn inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-900 text-white transition-all cursor-pointer">
+                        <i data-lucide="lightbulb" class="w-3.5 h-3.5"></i>
+                        <span>Teroka Topik</span>
+                    </button>
+                    <button type="button" onclick="setHeroMode('Homework', this)" class="hero-mode-btn inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200/70 transition-all cursor-pointer">
+                        <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
+                        <span>Bantu Kerja Rumah (Step-by-Step)</span>
+                    </button>
+                    <button type="button" onclick="setHeroMode('Exam Prep', this)" class="hero-mode-btn inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200/70 transition-all cursor-pointer">
+                        <i data-lucide="target" class="w-3.5 h-3.5"></i>
+                        <span>Ulang Kaji Exam + Kuiz</span>
+                    </button>
+                </div>
+                <span id="modeHelperHint" class="text-[11px] text-indigo-600 font-medium hidden sm:inline">
+                    Menerangkan konsep secara mendalam dengan rajah &amp; contoh
+                </span>
             </div>
 
             <!-- Textarea Soalan / Topik -->
             <div class="relative">
-                <textarea id="heroPromptInput" rows="2" placeholder="Taip topik, soalan kerja rumah, atau tampal teks untuk diajar pada papan putih..." class="w-full resize-none border-0 bg-transparent text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-0 p-1 leading-relaxed"></textarea>
+                <textarea id="heroPromptInput" rows="3" placeholder="Tanya apa sahaja... Contoh: 'Kenapa bola yang ditendang melengkung ke bawah?' atau 'Selesaikan persamaan 2x + 5 = 17'" class="w-full resize-none border-0 bg-transparent text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-0 p-1 leading-relaxed"></textarea>
             </div>
 
             <!-- Bar Input Pautan URL -->
             <div id="urlInputBar" class="hidden mt-2 mb-2 flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-2xl px-3 py-2">
                 <i data-lucide="link" class="w-4 h-4 text-slate-400 shrink-0"></i>
-                <input id="heroUrlField" type="url" placeholder="Tampal pautan artikel, nota web, atau video pembelajaran (https://...)" class="w-full bg-transparent text-xs sm:text-sm text-slate-700 focus:outline-none">
+                <input id="heroUrlField" type="url" placeholder="Tampal pautan nota, artikel, atau video pembelajaran (https://...)" class="w-full bg-transparent text-xs sm:text-sm text-slate-700 focus:outline-none">
                 <button type="button" onclick="attachUrl()" class="px-3 py-1 rounded-xl bg-slate-900 text-white text-xs font-semibold hover:bg-slate-800 cursor-pointer shrink-0">Lampirkan</button>
             </div>
 
@@ -260,17 +270,17 @@
             <div id="attachmentChips" class="hidden flex flex-wrap gap-2 mt-2 mb-2"></div>
 
             <!-- Bar Bawah Input -->
-            <div class="pt-2.5 mt-1 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+            <div class="pt-3 mt-1 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-1.5 flex-wrap">
-                    <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200/80 text-slate-700 text-xs font-medium cursor-pointer transition-colors" title="Muat naik banyak gambar (JPG, PNG, WEBP)">
-                        <i data-lucide="image-plus" class="w-3.5 h-3.5 text-indigo-600"></i>
-                        <span>Gambar</span>
+                    <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200/80 text-slate-700 text-xs font-medium cursor-pointer transition-colors">
+                        <i data-lucide="camera" class="w-3.5 h-3.5 text-indigo-600"></i>
+                        <span>Gambar Soalan</span>
                         <input id="imageUploadInput" type="file" accept="image/*" multiple class="hidden" onchange="handleMultipleFileUpload(event, 'image')">
                     </label>
 
-                    <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200/80 text-slate-700 text-xs font-medium cursor-pointer transition-colors" title="Muat naik fail PDF, TXT, CSV, atau Markdown">
+                    <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200/80 text-slate-700 text-xs font-medium cursor-pointer transition-colors">
                         <i data-lucide="file-text" class="w-3.5 h-3.5 text-rose-600"></i>
-                        <span>Fail / PDF</span>
+                        <span>Nota / PDF</span>
                         <input id="fileUploadInput" type="file" accept=".pdf,.txt,.md,.csv,.json" multiple class="hidden" onchange="handleMultipleFileUpload(event, 'document')">
                     </label>
 
@@ -279,49 +289,52 @@
                         <span>Pautan</span>
                     </button>
 
-                    <button type="button" id="heroMicBtn" onclick="toggleVoiceMic('hero')" class="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200/80 text-slate-700 text-xs font-medium cursor-pointer transition-colors">
-                        <i data-lucide="mic" class="w-3.5 h-3.5 text-amber-600"></i>
-                        <span id="heroMicLabel">Suara</span>
+                    <button type="button" id="heroMicBtn" onclick="toggleVoiceMic('hero')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-rose-50 text-slate-700 hover:text-rose-700 text-xs font-medium cursor-pointer transition-colors">
+                        <i data-lucide="mic" class="w-3.5 h-3.5 text-rose-600"></i>
+                        <span id="heroMicLabel">Tanya Guna Suara</span>
                     </button>
                 </div>
 
-                <button type="button" id="heroStartBtn" onclick="startFromHero()" class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-slate-900 hover:bg-indigo-600 text-white text-xs sm:text-sm font-semibold shadow-sm transition-all cursor-pointer">
-                    <span id="heroStartBtnText">Mula</span>
+                <button type="button" id="heroStartBtn" onclick="startFromHero()" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-indigo-200 transition-all cursor-pointer">
+                    <span id="heroStartBtnText">Mula Belajar di Papan Putih</span>
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </button>
             </div>
         </div>
 
-        <!-- CIP CADANGAN PANTAS -->
-        <div class="w-full mt-4 flex flex-wrap items-center justify-center gap-2">
-            <button type="button" onclick="quickStartIdea('Terangkan Teorem Pythagoras langkah demi langkah berserta lukisan segi tiga tepat dan contoh pengiraan.')" class="px-3.5 py-1.5 rounded-full bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-200 text-xs font-medium text-slate-700 transition-all cursor-pointer shadow-2xs">
-                📐 Teorem Pythagoras
-            </button>
-            <button type="button" onclick="quickStartIdea('Bagaimana proses Fotosintesis berlaku dalam daun tumbuhan? Lukis rajah mudah dan jelaskan.')" class="px-3.5 py-1.5 rounded-full bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200 text-xs font-medium text-slate-700 transition-all cursor-pointer shadow-2xs">
-                🌿 Proses Fotosintesis
-            </button>
-            <button type="button" onclick="quickStartIdea('Terangkan perbezaan antara Litar Siri dan Litar Selari berserta rajah litar asas.')" class="px-3.5 py-1.5 rounded-full bg-white hover:bg-amber-50 border border-slate-200 hover:border-amber-200 text-xs font-medium text-slate-700 transition-all cursor-pointer shadow-2xs">
-                ⚡ Litar Siri vs Selari
-            </button>
-            <button type="button" onclick="quickStartIdea('Ajarkan asas Present Perfect Tense dalam Bahasa Inggeris dengan garis masa visual dan contoh ayat.')" class="px-3.5 py-1.5 rounded-full bg-white hover:bg-sky-50 border border-slate-200 hover:border-sky-200 text-xs font-medium text-slate-700 transition-all cursor-pointer shadow-2xs">
-                🇬🇧 Present Perfect Tense
-            </button>
+        <!-- CIP CONTOH SEPERTI AHABOARD -->
+        <div class="w-full mt-5">
+            <p class="text-center text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2.5">Atau cuba contoh pelajaran interaktif ini:</p>
+            <div class="flex flex-wrap items-center justify-center gap-2">
+                <button type="button" onclick="quickStartIdea('Kenapa bola yang ditendang ke hadapan melengkung ke bawah? Terangkan Gerakan Projektil dengan perbandingan bola yang dijatuhkan vs dibaling mendatar.', 'Topic')" class="px-3.5 py-1.5 rounded-full bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 text-xs font-medium text-slate-700 transition-all cursor-pointer shadow-2xs">
+                    🏀 Fizik: Kenapa bola melengkung?
+                </button>
+                <button type="button" onclick="quickStartIdea('Bantu saya selesaikan persamaan linear ini langkah demi langkah: 3x - 7 = 14. Jangan terus beri jawapan, bimbing saya satu langkah demi satu langkah.', 'Homework')" class="px-3.5 py-1.5 rounded-full bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-xs font-medium text-slate-700 transition-all cursor-pointer shadow-2xs">
+                    🧮 Kerja Rumah: Selesaikan 3x - 7 = 14
+                </button>
+                <button type="button" onclick="quickStartIdea('Ulang kaji peperiksaan Biologi: Pewarisan Genetik (Alel Dominan vs Resesif, Segi Empat Punnett untuk ibu IAi dan bapa IBi, serta perangkap jenis darah O).', 'Exam Prep')" class="px-3.5 py-1.5 rounded-full bg-white hover:bg-amber-50 border border-slate-200 hover:border-amber-300 text-xs font-medium text-slate-700 transition-all cursor-pointer shadow-2xs">
+                    🧬 Exam Prep: Segi Empat Punnett &amp; Darah
+                </button>
+                <button type="button" onclick="quickStartIdea('Kenapa faedah kompaun (compound interest) berkembang dengan sangat pantas berbanding faedah mudah? Lukis graf perbandingan.', 'Topic')" class="px-3.5 py-1.5 rounded-full bg-white hover:bg-sky-50 border border-slate-200 hover:border-sky-300 text-xs font-medium text-slate-700 transition-all cursor-pointer shadow-2xs">
+                    💰 Kewangan: Kenapa faedah kompaun laju?
+                </button>
+            </div>
         </div>
 
         <!-- SEKSYEN SEJARAH PEMBELAJARAN LEPAS -->
-        <section class="w-full mt-10 pt-6 border-t border-slate-200/80">
+        <section class="w-full mt-12 pt-6 border-t border-slate-200/80">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-2">
                     <i data-lucide="history" class="w-4 h-4 text-slate-600"></i>
-                    <h2 class="text-sm font-bold text-slate-800">Pembelajaran Lepas Anda</h2>
+                    <h2 class="text-sm font-bold text-slate-800">Nota &amp; Papan Putih Lepas Anda</h2>
                 </div>
                 <span id="historyCountBadge" class="text-xs text-slate-500">0 Sesi</span>
             </div>
 
             <div id="pastLessonsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 <div class="col-span-full p-6 rounded-2xl bg-white border border-dashed border-slate-200 text-center space-y-1">
-                    <p class="text-xs sm:text-sm font-semibold text-slate-600">Belum ada rekod pembelajaran lepas.</p>
-                    <p class="text-xs text-slate-400">Mulakan mana-mana topik di atas untuk menyimpannya secara automatik ke akaun anda.</p>
+                    <p class="text-xs sm:text-sm font-semibold text-slate-600">Belum ada rekod papan putih lepas.</p>
+                    <p class="text-xs text-slate-400">Setiap sesi pengajaran akan disimpan automatik berserta nota &amp; rajah untuk ulang kaji.</p>
                 </div>
             </div>
         </section>
@@ -334,10 +347,207 @@
         <button type="button" onclick="openAdminPortal()" class="text-slate-500 hover:text-indigo-600 font-medium underline cursor-pointer">Panel Admin</button>
     </footer>
 
+    <!-- ==================== MODAL PAPAN PUTIH INTERAKTIF 2 HALA (AHABOARD STUDIO) ==================== -->
+    <div id="workspaceModal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-1.5 sm:p-3">
+        <div class="bg-white w-full max-w-7xl h-[96vh] rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden">
+
+            <!-- BAR ATAS STUDIO PAPAN PUTIH -->
+            <div class="px-4 py-2.5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div id="wsCharAvatar" class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center overflow-hidden shadow-2xs shrink-0"></div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-1.5">
+                            <span id="wsLessonTitle" class="text-xs sm:text-sm font-extrabold text-slate-900 truncate max-w-[200px] sm:max-w-md">Pelajaran Papan Putih</span>
+                            <span id="wsModeBadge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-100 text-indigo-700 shrink-0">Topic</span>
+                        </div>
+                        <p id="wsCharStyle" class="text-[11px] text-slate-500 truncate">Tutor: Professor Genius</p>
+                    </div>
+                </div>
+
+                <!-- Kawalan Interaktif Studio -->
+                <div class="flex items-center gap-1.5 flex-wrap">
+                    <!-- Mod Perbualan Suara 2 Hala (Auto-Listen) -->
+                    <button type="button" id="twoWayVoiceLoopBtn" onclick="toggleTwoWayAutoListen()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-xs font-bold text-emerald-800 cursor-pointer" title="Apabila aktif, mikrofon anda automatik mendengar selepas tutor selesai menerangkan">
+                        <i data-lucide="radio" class="w-3.5 h-3.5 text-emerald-600"></i>
+                        <span id="twoWayLoopLabel">Bual 2 Hala: Hidup</span>
+                    </button>
+
+                    <!-- Suis Mod Interaktif vs Penerangan Berterusan (AhaBoard Continuous Mode) -->
+                    <button type="button" id="continuousPlayBtn" onclick="toggleContinuousPlay()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-indigo-50 border border-slate-200 text-xs font-semibold text-slate-700 cursor-pointer" title="Tukar antara Interaktif (berhenti bertanya) atau Penerangan Berterusan (auto-sambung papan)">
+                        <i data-lucide="play-circle" class="w-3.5 h-3.5 text-indigo-600"></i>
+                        <span id="continuousPlayLabel">Mod: Interaktif</span>
+                    </button>
+
+                    <!-- Tukar Bahasa Pertengahan Sesi (Switch Language Mid-Lesson) -->
+                    <div class="relative inline-flex items-center">
+                        <select id="wsLanguageSelector" onchange="switchLessonLanguageMidSession(this.value)" class="pl-2.5 pr-6 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none cursor-pointer appearance-none" title="Tukar bahasa pertengahan pelajaran">
+                            <option value="ms">BM</option>
+                            <option value="en">EN</option>
+                            <option value="zh">中文</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="ar">عربي</option>
+                        </select>
+                        <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400 absolute right-1.5 pointer-events-none"></i>
+                    </div>
+
+                    <!-- Suara Tutor -->
+                    <button type="button" id="voiceToggleBtn" onclick="toggleVoice()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 cursor-pointer">
+                        <i data-lucide="volume-2" class="w-3.5 h-3.5 text-indigo-600"></i>
+                        <span id="voiceStatusLabel" class="hidden sm:inline">Suara: Hidup</span>
+                    </button>
+
+                    <!-- Tulis Semula Adegan -->
+                    <button type="button" onclick="replayCurrentScene()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 cursor-pointer" title="Tulis & lukis semula langkah ini">
+                        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                        <span class="hidden md:inline">Ulang Lukis</span>
+                    </button>
+
+                    <!-- Muat Turun Papan Putih Lengkap (Berserta Lukisan SVG) -->
+                    <button type="button" onclick="downloadFullWhiteboardHtml()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-xs font-bold text-indigo-700 cursor-pointer" title="Muat turun papan putih lengkap bersama lukisan rajah">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                        <span class="hidden md:inline">Muat Turun Papan</span>
+                    </button>
+
+                    <!-- Tutup -->
+                    <button type="button" onclick="closeWorkspace()" class="p-1.5 rounded-xl bg-white hover:bg-rose-50 border border-slate-200 text-slate-600 hover:text-rose-600 cursor-pointer" title="Tutup Papan Putih">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- BADAN UTAMA: PAPAN PUTIH (KIRI) + DIALOG 2 HALA (KANAN) -->
+            <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+
+                <!-- BAHAGIAN 1: PAPAN PUTIH BERANIMASI (7 KOLUM) -->
+                <div class="lg:col-span-7 flex flex-col border-b lg:border-b-0 lg:border-r border-slate-200 whiteboard-canvas-bg relative overflow-hidden">
+
+                    <!-- Bar Alat Pen Contengan & Petunjuk Adegan -->
+                    <div class="px-3.5 py-2 bg-white/95 backdrop-blur-xs border-b border-slate-200/80 flex items-center justify-between gap-2 z-20">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[11px] font-bold text-slate-500">Pen Anda:</span>
+                            <button type="button" onclick="setPenColor('#0f172a')" class="w-5 h-5 rounded-full bg-slate-900 ring-2 ring-offset-1 ring-slate-300 cursor-pointer" title="Hitam"></button>
+                            <button type="button" onclick="setPenColor('#2563eb')" class="w-5 h-5 rounded-full bg-blue-600 cursor-pointer" title="Biru"></button>
+                            <button type="button" onclick="setPenColor('#dc2626')" class="w-5 h-5 rounded-full bg-red-600 cursor-pointer" title="Merah"></button>
+                            <button type="button" onclick="setPenColor('#059669')" class="w-5 h-5 rounded-full bg-emerald-600 cursor-pointer" title="Hijau"></button>
+                            <button type="button" onclick="clearUserCanvas()" class="ml-1 px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[11px] font-semibold text-slate-600 cursor-pointer">Padam</button>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <span id="wsSceneBadge" class="px-2.5 py-0.5 rounded-full bg-slate-900 text-white text-[11px] font-bold">Babak 1 / 4</span>
+                        </div>
+                    </div>
+
+                    <!-- Kanvas Contengan Pelajar (Boleh conteng di atas papan putih) -->
+                    <canvas id="studentDrawCanvas" class="absolute inset-0 top-10 w-full h-[calc(100%-7.5rem)] z-10 cursor-crosshair pointer-events-none"></canvas>
+
+                    <!-- Butang Togol Mod Conteng -->
+                    <button type="button" id="toggleDrawModeBtn" onclick="toggleStudentDrawMode()" class="absolute top-12 right-3 z-20 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/90 border border-slate-200 shadow-xs text-[11px] font-semibold text-slate-700 hover:bg-indigo-50 cursor-pointer">
+                        <i data-lucide="pen-tool" class="w-3 h-3 text-indigo-600"></i>
+                        <span id="drawModeLabel">Mod Conteng: Tutup</span>
+                    </button>
+
+                    <!-- KAWASAN TULISAN TANGAN & LUKISAN RAJAH AI -->
+                    <div id="wsBoardContent" class="flex-1 p-5 sm:p-8 overflow-y-auto relative z-0 space-y-5"></div>
+
+                    <!-- BAR MASKOT TUTOR BERCAKAP LANGSUNG (DENGAN BUTANG POTONG CAKAP / CUT IN) -->
+                    <div class="px-4 py-2.5 bg-white/95 border-t border-slate-200 flex items-center justify-between gap-3 z-20">
+                        <div class="flex items-center gap-3 min-w-0 flex-1">
+                            <div id="wsBoardCartoonFigure" class="w-11 h-11 shrink-0"></div>
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center gap-2">
+                                    <span id="wsBoardMascotName" class="text-xs font-extrabold text-slate-900">Professor Genius</span>
+                                    <div id="speakingWaveIndicator" class="hidden items-end gap-0.5 h-4">
+                                        <span class="wave-bar"></span>
+                                        <span class="wave-bar"></span>
+                                        <span class="wave-bar"></span>
+                                        <span class="wave-bar"></span>
+                                    </div>
+                                </div>
+                                <p id="wsBoardSpeechBubble" class="text-xs text-slate-600 line-clamp-2 leading-snug">Sedia menulis &amp; menerangkan konsep ini...</p>
+                            </div>
+                        </div>
+
+                        <!-- Butang Potong Percakapan Tutor ("Cut in anytime") -->
+                        <button type="button" id="cutInBtn" onclick="cutInAndSpeak()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-xs font-bold cursor-pointer shrink-0 transition-all" title="Hentikan suara tutor dan terus bercakap / bertanya">
+                            <i data-lucide="hand" class="w-3.5 h-3.5"></i>
+                            <span>Sampuk / Tanya</span>
+                        </button>
+                    </div>
+
+                    <!-- NAVIGASI BABAK PAPAN PUTIH -->
+                    <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-2 z-20">
+                        <div class="flex items-center gap-1.5 min-w-0">
+                            <button type="button" id="prevSceneBtn" onclick="prevWsScene()" class="px-2.5 py-1.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-xs font-semibold text-slate-700 cursor-pointer disabled:opacity-40 shrink-0">
+                                ← Sebelum
+                            </button>
+                            <div id="wsStepButtons" class="flex items-center gap-1 overflow-x-auto max-w-[180px] sm:max-w-xs py-0.5"></div>
+                            <button type="button" id="addMoreBoardBtn" onclick="generateNextDynamicBoard()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold cursor-pointer shrink-0" title="Minta tutor buka papan putih baharu dan sambung pengajaran">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                                <span class="hidden sm:inline">Papan Baharu</span>
+                            </button>
+                        </div>
+                        <button type="button" id="nextStepBtn" onclick="nextWsStep()" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-xs cursor-pointer shrink-0">
+                            <span>Papan Seterusnya</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- BAHAGIAN 2: PERBUALAN 2 HALA & BANTUAN LANGKAH DEMI LANGKAH (5 KOLUM) -->
+                <div class="lg:col-span-5 flex flex-col bg-slate-50/80 overflow-hidden">
+                    <!-- Header Sembang 2 Hala -->
+                    <div class="px-4 py-2.5 bg-white border-b border-slate-200/80 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span class="text-xs font-bold text-slate-800">Dialog Tutor 2 Hala</span>
+                        </div>
+                        <button type="button" onclick="triggerExamQuizMode()" class="px-2.5 py-1 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-800 text-[11px] font-bold cursor-pointer">
+                            🎯 Kuiz 3 Soalan
+                        </button>
+                    </div>
+
+                    <!-- Senarai Mesej Dialog -->
+                    <div id="wsChatMessages" class="flex-1 p-4 overflow-y-auto space-y-3.5 text-xs sm:text-sm"></div>
+
+                    <!-- Cip Tindakan Pantas AhaBoard ("Cut in, try another way") -->
+                    <div class="px-3 py-2 bg-white border-t border-slate-200/70 flex items-center gap-1.5 overflow-x-auto">
+                        <label class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-200 text-[11px] font-bold text-amber-800 whitespace-nowrap cursor-pointer" title="Muat naik gambar jalan kerja tulisan tangan anda untuk disemak baris demi baris">
+                            <span>📸 Semak Jalan Kerja Saya</span>
+                            <input type="file" accept="image/*" class="hidden" onchange="handleCheckStudentWorkImage(event)">
+                        </label>
+                        <button type="button" onclick="sendQuickReply('Saya kurang faham bahagian ini. Cuba terangkan guna cara lain dan analogi harian yang lebih mudah!')" class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[11px] font-semibold text-slate-700 whitespace-nowrap cursor-pointer">
+                            🔄 Terang cara lain
+                        </button>
+                        <button type="button" onclick="sendQuickReply('Lukiskan gambar rajah atau graf yang lebih terperinci di papan putih supaya saya nampak gambaran penuh.')" class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[11px] font-semibold text-slate-700 whitespace-nowrap cursor-pointer">
+                            🎨 Lukis rajah terperinci
+                        </button>
+                        <button type="button" onclick="sendQuickReply('Beri saya satu langkah latihan untuk saya cuba selesaikan sendiri sekarang.')" class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-[11px] font-semibold text-slate-700 whitespace-nowrap cursor-pointer">
+                            ✍️ Saya nak cuba
+                        </button>
+                    </div>
+
+                    <!-- Bar Input Sembang & Suara 2 Hala -->
+                    <form onsubmit="handleWsChatSubmit(event)" class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
+                        <label class="p-2.5 rounded-full bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 border border-slate-200 transition-colors cursor-pointer shrink-0" title="Muat naik gambar kerja rumah / jalan kerja">
+                            <i data-lucide="camera" class="w-4 h-4"></i>
+                            <input type="file" accept="image/*" class="hidden" onchange="handleCheckStudentWorkImage(event)">
+                        </label>
+                        <button type="button" id="wsMicBtn" onclick="toggleVoiceMic('workspace')" class="relative p-2.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 transition-colors cursor-pointer shrink-0" title="Tekan & Bercakap dengan Tutor">
+                            <i data-lucide="mic" class="w-4 h-4"></i>
+                        </button>
+                        <input id="wsChatInput" type="text" placeholder="Jawab soalan tutor, muat naik jalan kerja, atau sampuk tanya..." class="flex-1 px-3.5 py-2 rounded-full bg-slate-100 border border-transparent focus:bg-white focus:border-indigo-400 text-xs sm:text-sm focus:outline-none">
+                        <button type="submit" id="wsSendBtn" class="p-2.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white transition-colors cursor-pointer shrink-0">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ==================== MODAL PORTAL ADMIN (LOG MASUK + PENGURUSAN API KEY) ==================== -->
     <div id="adminPortalModal" class="hidden fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
-            <!-- Header Modal Admin -->
             <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
                     <div class="w-9 h-9 rounded-xl bg-amber-400/20 border border-amber-400/40 text-amber-300 flex items-center justify-center">
@@ -353,13 +563,13 @@
                 </button>
             </div>
 
-            <!-- LANGKAH 1: SKRIN KATA LALUAN ADMIN -->
+            <!-- LANGKAH 1: KATA LALUAN ADMIN -->
             <div id="adminLoginView" class="p-6 space-y-4">
                 <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 flex items-start gap-2.5">
                     <i data-lucide="lock" class="w-4 h-4 text-amber-600 shrink-0 mt-0.5"></i>
                     <div>
                         <p class="font-bold">Kawasan Terhad Untuk Admin Sahaja</p>
-                        <p class="mt-0.5 text-[11px] text-amber-800">Masukkan kata laluan Admin untuk membuka panel pengurusan API Key. (Kata laluan lalai: <code class="px-1.5 py-0.5 rounded bg-amber-200/70 font-mono font-bold">admin123</code>)</p>
+                        <p class="mt-0.5 text-[11px] text-amber-800">Masukkan kata laluan Admin untuk menguruskan API Key. (Kata laluan lalai: <code class="px-1.5 py-0.5 rounded bg-amber-200/70 font-mono font-bold">admin123</code>)</p>
                     </div>
                 </div>
 
@@ -379,9 +589,8 @@
                 </div>
             </div>
 
-            <!-- LANGKAH 2: DASHBOARD PENGURUSAN API KEY ADMIN -->
+            <!-- LANGKAH 2: DASHBOARD API KEY ADMIN -->
             <div id="adminDashboardView" class="hidden p-6 space-y-4 max-h-[82vh] overflow-y-auto">
-                <!-- Status Kunci Semasa -->
                 <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
                     <div>
                         <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Status API Key Semasa</p>
@@ -389,16 +598,12 @@
                         <p id="adminCloudSyncInfo" class="text-[11px] text-slate-500 mt-0.5">Sedia untuk dikemas kini</p>
                     </div>
                     <button type="button" onclick="logoutAdmin()" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:bg-rose-50 hover:text-rose-600 text-xs font-semibold text-slate-600 cursor-pointer shrink-0">
-                        Log Keluar Admin
+                        Log Keluar
                     </button>
                 </div>
 
-                <!-- Panduan Pantas -->
                 <div class="p-3.5 rounded-2xl bg-indigo-50/70 border border-indigo-100 text-xs text-indigo-950 space-y-1">
-                    <p class="font-bold flex items-center gap-1.5">
-                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
-                        <span>Cara Dapatkan Kunci Gemini API Percuma:</span>
-                    </p>
+                    <p class="font-bold">Cara Dapatkan Kunci Gemini API Percuma:</p>
                     <ol class="list-decimal list-inside space-y-0.5 text-[11px] text-indigo-900">
                         <li>Buka <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" class="font-bold underline text-indigo-700">Google AI Studio API Keys</a>.</li>
                         <li>Klik <strong>Create API key</strong> → pilih <strong>Create API key in new project</strong>.</li>
@@ -406,28 +611,25 @@
                     </ol>
                 </div>
 
-                <!-- Borang Paste API Key -->
                 <div class="space-y-2">
                     <label class="block text-xs font-bold text-slate-700">Tampal (Paste) Gemini API Key Baharu</label>
                     <div class="relative">
                         <input id="adminApiKeyInput" type="password" placeholder="Tampal kunci AIzaSy... atau AQ.... di sini" class="w-full pl-3.5 pr-10 py-2.5 rounded-2xl border border-slate-300 text-xs sm:text-sm font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <button type="button" onclick="toggleApiKeyVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-700 cursor-pointer" title="Tunjuk / Sembunyi kunci">
+                        <button type="button" onclick="toggleApiKeyVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-700 cursor-pointer">
                             <i data-lucide="eye" class="w-4 h-4"></i>
                         </button>
                     </div>
                     <p id="adminKeyTestResult" class="hidden text-xs font-medium px-3 py-2 rounded-xl"></p>
                 </div>
 
-                <!-- Tukar Kata Laluan Admin (Opsyenal) -->
                 <details class="rounded-2xl border border-slate-200 p-3 text-xs">
                     <summary class="font-semibold text-slate-700 cursor-pointer select-none">Tukar Kata Laluan Admin</summary>
                     <div class="mt-2.5 flex items-center gap-2">
-                        <input id="newAdminPassInput" type="password" placeholder="Kata laluan admin baharu (min 4 aksara)" class="flex-1 px-3 py-2 rounded-xl border border-slate-300 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <input id="newAdminPassInput" type="password" placeholder="Kata laluan baharu (min 4 aksara)" class="flex-1 px-3 py-2 rounded-xl border border-slate-300 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500">
                         <button type="button" onclick="updateAdminPassword()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold cursor-pointer">Simpan</button>
                     </div>
                 </details>
 
-                <!-- Butang Tindakan -->
                 <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100">
                     <button type="button" onclick="clearSavedApiKey()" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 cursor-pointer">
                         Padam Kunci API
@@ -453,27 +655,27 @@
                     <i data-lucide="graduation-cap" class="w-6 h-6"></i>
                 </div>
                 <h3 class="text-lg font-bold text-slate-900">Log Masuk Akaun Pelajar</h3>
-                <p class="text-xs text-slate-500">Gunakan alamat Gmail aktif untuk menyimpan sejarah pembelajaran anda.</p>
+                <p class="text-xs text-slate-500">Masukkan alamat Gmail untuk menyimpan nota &amp; sejarah pembelajaran anda.</p>
             </div>
 
             <div id="emailStepContainer" class="space-y-3">
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 mb-1">Alamat Gmail Anda</label>
-                    <input id="gmailInput" type="email" placeholder="contoh: pelajar.cemerlang@gmail.com" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <input id="gmailInput" type="email" placeholder="contoh: pelajar@gmail.com" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
                 <p id="loginErrorMsg" class="hidden text-xs text-rose-600 font-medium"></p>
                 <button type="button" onclick="sendGmailOtp()" class="w-full py-2.5 rounded-2xl bg-slate-900 hover:bg-indigo-600 text-white text-sm font-semibold transition-colors cursor-pointer">
-                    Hantar Kod Pengesahan (OTP)
+                    Hantar Kod OTP
                 </button>
             </div>
 
             <div id="otpStepContainer" class="hidden space-y-3">
                 <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 space-y-1">
-                    <p class="font-semibold">Kod OTP 6-digit telah dijana untuk <span id="otpTargetEmail" class="underline"></span>:</p>
+                    <p class="font-semibold">Kod OTP 6-digit untuk <span id="otpTargetEmail" class="underline"></span>:</p>
                     <p class="text-base font-extrabold tracking-widest text-emerald-950" id="simulatedOtpDisplay">------</p>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Masukkan Kod OTP 6-Digit</label>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Masukkan Kod 6-Digit</label>
                     <input id="otpCodeInput" type="text" maxlength="6" placeholder="123456" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 text-center text-base font-bold tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
                 <p id="otpErrorMsg" class="hidden text-xs text-rose-600 font-medium"></p>
@@ -483,132 +685,6 @@
                 <button type="button" onclick="resetAuthForm()" class="w-full text-xs text-slate-500 hover:text-slate-800 cursor-pointer">
                     Tukar alamat emel
                 </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== MODAL PAPAN PUTIH INTERAKTIF ==================== -->
-    <div id="workspaceModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4">
-        <div class="bg-white w-full max-w-6xl h-[94vh] rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden">
-
-            <!-- Bar Atas Workspace -->
-            <div class="px-4 py-2.5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
-                <div class="flex items-center gap-2.5">
-                    <div id="wsCharAvatar" class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center overflow-hidden shadow-2xs"></div>
-                    <div>
-                        <div class="flex items-center gap-1.5">
-                            <span id="wsCharName" class="text-xs sm:text-sm font-bold text-slate-900">Professor Genius</span>
-                            <span id="wsModeBadge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-100 text-indigo-700">Topik</span>
-                        </div>
-                        <p id="wsCharStyle" class="text-[11px] text-slate-500">Gaya: Teratur &amp; Akademik</p>
-                    </div>
-                </div>
-
-                <!-- Tukar Watak Pantas -->
-                <div class="hidden md:flex items-center gap-1 bg-white px-2 py-1 rounded-full border border-slate-200">
-                    <span class="text-[10px] font-semibold text-slate-400 px-1.5">Tukar Tutor:</span>
-                    <button type="button" onclick="selectCharacter('genius')" class="ws-mini-mascot p-1 rounded-full hover:bg-indigo-50 cursor-pointer" title="Professor Genius" data-mini-avatar="genius"></button>
-                    <button type="button" onclick="selectCharacter('chill')" class="ws-mini-mascot p-1 rounded-full hover:bg-emerald-50 cursor-pointer" title="Bro Chill" data-mini-avatar="chill"></button>
-                    <button type="button" onclick="selectCharacter('strict')" class="ws-mini-mascot p-1 rounded-full hover:bg-rose-50 cursor-pointer" title="Kapten Tegas" data-mini-avatar="strict"></button>
-                    <button type="button" onclick="selectCharacter('cheerful')" class="ws-mini-mascot p-1 rounded-full hover:bg-amber-50 cursor-pointer" title="Kakak Ceria" data-mini-avatar="cheerful"></button>
-                    <button type="button" onclick="selectCharacter('robot')" class="ws-mini-mascot p-1 rounded-full hover:bg-cyan-50 cursor-pointer" title="Robo-Sains" data-mini-avatar="robot"></button>
-                </div>
-
-                <!-- Butang Kawalan -->
-                <div class="flex items-center gap-1.5">
-                    <button type="button" onclick="replayHandwritingStep()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 cursor-pointer" title="Tulis semula langkah ini">
-                        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                        <span class="hidden sm:inline">Tulis Semula</span>
-                    </button>
-                    <button type="button" id="voiceToggleBtn" onclick="toggleVoice()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-xs font-semibold text-indigo-700 cursor-pointer" title="Hidup/Matikan Suara Tutor">
-                        <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-                        <span id="voiceStatusLabel">Suara: Hidup</span>
-                    </button>
-                    <button type="button" onclick="triggerQuickQuiz()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-xs font-semibold text-amber-800 cursor-pointer">
-                        <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
-                        <span class="hidden sm:inline">Kuiz</span>
-                    </button>
-                    <button type="button" onclick="closeWorkspace()" class="p-1.5 rounded-xl bg-white hover:bg-rose-50 border border-slate-200 text-slate-600 hover:text-rose-600 cursor-pointer" title="Tutup Papan Putih">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Badan Utama: Papan Putih + Ruang Dialog -->
-            <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
-
-                <!-- PAPAN PUTIH (7 Kolum) -->
-                <div class="lg:col-span-7 flex flex-col border-b lg:border-b-0 lg:border-r border-slate-200 whiteboard-surface relative overflow-hidden">
-
-                    <!-- Bar Alat Pen -->
-                    <div class="px-3 py-2 bg-white/90 backdrop-blur-xs border-b border-slate-200/80 flex items-center justify-between gap-2 z-10">
-                        <div class="flex items-center gap-1.5">
-                            <span class="text-[11px] font-bold text-slate-500">Pen Contengan Anda:</span>
-                            <button type="button" onclick="setPenColor('#1e293b')" class="w-5 h-5 rounded-full bg-slate-800 ring-2 ring-offset-1 ring-slate-400 cursor-pointer" title="Pen Hitam"></button>
-                            <button type="button" onclick="setPenColor('#2563eb')" class="w-5 h-5 rounded-full bg-blue-600 cursor-pointer" title="Pen Biru"></button>
-                            <button type="button" onclick="setPenColor('#dc2626')" class="w-5 h-5 rounded-full bg-red-600 cursor-pointer" title="Pen Merah"></button>
-                            <button type="button" onclick="setPenColor('#16a34a')" class="w-5 h-5 rounded-full bg-green-600 cursor-pointer" title="Pen Hijau"></button>
-                            <button type="button" onclick="clearUserCanvas()" class="ml-1 px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[11px] font-semibold text-slate-600 cursor-pointer">Padam Contengan</button>
-                        </div>
-                        <div class="text-[11px] font-semibold text-slate-500" id="wsStepIndicator">Langkah 1 / 1</div>
-                    </div>
-
-                    <!-- Kanvas Contengan Pelajar -->
-                    <canvas id="studentDrawCanvas" class="absolute inset-0 top-10 w-full h-[calc(100%-6.5rem)] z-10 cursor-crosshair opacity-85"></canvas>
-
-                    <!-- Kandungan Tulisan Tangan & Lakaran AI -->
-                    <div id="wsBoardContent" class="flex-1 p-5 sm:p-7 overflow-y-auto relative z-0 space-y-4"></div>
-
-                    <!-- Maskot Kartun Bercakap -->
-                    <div id="wsMascotStage" class="px-4 py-2.5 bg-white/95 border-t border-slate-200/90 flex items-center gap-3 z-20">
-                        <div id="wsBoardCartoonFigure" class="w-12 h-12 shrink-0 mascot-idle"></div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-1.5">
-                                <span id="wsBoardMascotName" class="text-xs font-extrabold text-slate-900">Professor Genius</span>
-                                <span id="wsBoardMascotRole" class="text-[10px] text-indigo-600 font-semibold">• Mentor Akademik</span>
-                            </div>
-                            <p id="wsBoardSpeechBubble" class="text-xs text-slate-600 truncate">Sedia menulis dan melukis di papan putih!</p>
-                        </div>
-                    </div>
-
-                    <!-- Navigasi Langkah -->
-                    <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-2 z-20">
-                        <div id="wsStepButtons" class="flex items-center gap-1 overflow-x-auto"></div>
-                        <button type="button" id="nextStepBtn" onclick="nextWsStep()" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-xs cursor-pointer shrink-0">
-                            <span>Langkah Seterusnya</span>
-                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- DIALOG SOKRATIK (5 Kolum) -->
-                <div class="lg:col-span-5 flex flex-col bg-slate-50/70 overflow-hidden">
-                    <div id="wsChatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs sm:text-sm"></div>
-
-                    <!-- Cip Pantas -->
-                    <div class="px-3 py-2 bg-white border-t border-slate-200/80 flex items-center gap-1.5 overflow-x-auto">
-                        <button type="button" onclick="sendQuickReply('Beri satu contoh lain yang lebih mudah difahami')" class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-indigo-50 text-[11px] font-medium text-slate-700 whitespace-nowrap cursor-pointer">
-                            💡 Contoh lain
-                        </button>
-                        <button type="button" onclick="sendQuickReply('Lukiskan gambar rajah supaya saya lebih nampak')" class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-indigo-50 text-[11px] font-medium text-slate-700 whitespace-nowrap cursor-pointer">
-                            🎨 Lukis rajah
-                        </button>
-                        <button type="button" onclick="sendQuickReply('Saya sudah faham, teruskan dengan soalan latihan')" class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-emerald-50 text-[11px] font-medium text-slate-700 whitespace-nowrap cursor-pointer">
-                            ✅ Saya faham
-                        </button>
-                    </div>
-
-                    <!-- Input Sembang -->
-                    <form onsubmit="handleWsChatSubmit(event)" class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
-                        <button type="button" id="wsMicBtn" onclick="toggleVoiceMic('workspace')" class="relative p-2.5 rounded-full bg-slate-100 hover:bg-rose-50 text-slate-700 hover:text-rose-600 transition-colors cursor-pointer shrink-0" title="Bercakap dengan Tutor">
-                            <i data-lucide="mic" class="w-4 h-4"></i>
-                        </button>
-                        <input id="wsChatInput" type="text" placeholder="Tanya tutor atau jawab soalan di sini..." class="flex-1 px-3.5 py-2 rounded-full bg-slate-100 border border-transparent focus:bg-white focus:border-indigo-400 text-xs sm:text-sm focus:outline-none">
-                        <button type="submit" class="p-2.5 rounded-full bg-slate-900 hover:bg-indigo-600 text-white transition-colors cursor-pointer shrink-0">
-                            <i data-lucide="send" class="w-4 h-4"></i>
-                        </button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
@@ -623,47 +699,64 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // =========================================================================
-        // 1. KONFIGURASI ADMIN, KUNCI API & PENYEGERAKAN AWAN (FIRESTORE + LOKAL)
+        // 1. PENYEGERAKAN AWAN KEKAL UNTUK ADMIN SAHAJA (PELAJAR AUTO-LIVE)
         // =========================================================================
-        const LOCAL_ADMIN_KEY_STORAGE = 'sokra_admin_gemini_api_key_v2';
-        const LOCAL_ADMIN_PASS_STORAGE = 'sokra_admin_password_v2';
-        const DEFAULT_ADMIN_PASS = 'admin123';
+        const LOCAL_ADMIN_KEY_STORAGE = 'sokra_admin_gemini_api_key_v4';
+        const LOCAL_ADMIN_PASS_STORAGE = 'sokra_admin_pass_v4';
+        const LOCAL_ACTIVE_MODEL_STORAGE = 'sokra_active_gemini_model_v4';
+        const DEFAULT_ADMIN_PASSWORD = 'admin123';
 
         let sharedCloudApiKey = '';
+        let activeGeminiModel = localStorage.getItem(LOCAL_ACTIVE_MODEL_STORAGE) || 'gemini-2.5-flash';
         let isAdminAuthenticated = false;
+        let isCloudConfigLoaded = false;
 
         function getAdminPassword() {
-            return localStorage.getItem(LOCAL_ADMIN_PASS_STORAGE) || DEFAULT_ADMIN_PASS;
+            return localStorage.getItem(LOCAL_ADMIN_PASS_STORAGE) || DEFAULT_ADMIN_PASSWORD;
         }
 
+        function sanitizeApiKey(raw) {
+            return String(raw || '').replace(/[^\x21-\x7E]/g, '').trim();
+        }
+
+        const sanitizeAsciiKey = sanitizeApiKey;
+
         function getActiveGeminiKey() {
-            const localKey = (localStorage.getItem(LOCAL_ADMIN_KEY_STORAGE) || '').trim();
-            return localKey || sharedCloudApiKey || '';
+            // Utamakan kunci awan terkini yang disimpan Admin supaya sentiasa seragam untuk semua pelajar
+            const cloudKey = sanitizeApiKey(sharedCloudApiKey);
+            const localKey = sanitizeApiKey(localStorage.getItem(LOCAL_ADMIN_KEY_STORAGE));
+            return cloudKey || localKey || '';
         }
 
         function saveLocalGeminiKey(key) {
-            if (key && key.trim()) {
-                localStorage.setItem(LOCAL_ADMIN_KEY_STORAGE, key.trim());
+            const clean = sanitizeApiKey(key);
+            if (clean) {
+                localStorage.setItem(LOCAL_ADMIN_KEY_STORAGE, clean);
             } else {
                 localStorage.removeItem(LOCAL_ADMIN_KEY_STORAGE);
             }
         }
 
-        function getGeminiEndpoint(model, key) {
-            const cleanKey = (key || '').trim();
-            // Kunci format baharu Google AI Studio / Vertex Express bermula dengan "AQ."
+        function getGeminiEndpoint(model, key, forceVertex = false) {
+            const cleanKey = sanitizeApiKey(key);
             if (cleanKey.startsWith('AQ.')) {
+                if (!forceVertex) {
+                    return {
+                        url: `https://aiplatform.googleapis.com/v1/publishers/google/models/${model}:generateContent?key=${encodeURIComponent(cleanKey)}`,
+                        headers: { 'Content-Type': 'application/json' }
+                    };
+                }
                 return {
-                    url: `https://aiplatform.googleapis.com/v1/publishers/google/models/${model}:generateContent?key=${encodeURIComponent(cleanKey)}`,
+                    url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'x-goog-api-key': cleanKey
                     }
                 };
             }
-            // Kunci standard Google AI Studio bermula dengan "AIza"
             return {
                 url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(cleanKey)}`,
                 headers: {
@@ -672,7 +765,6 @@
             };
         }
 
-        // Konfigurasi Firebase untuk penyegerakan kunci admin ke pelajar & sejarah
         const defaultFirebaseConfig = {
             apiKey: "AIzaSy" + "C0t0Q4_0j-d3V37v1W2G-j8b_R-dM0t1fU",
             authDomain: "sokra-tutor.firebaseapp.com",
@@ -685,19 +777,20 @@
         const firebaseConfig = typeof __firebase_config !== 'undefined'
             ? JSON.parse(__firebase_config)
             : defaultFirebaseConfig;
-
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'sokra-tutor-app';
 
-        let app = null;
-        let auth = null;
         let db = null;
         let cloudUser = null;
 
         async function initCloudStorage() {
-            refreshAiBadgeFromKey();
+            // Papar status pantas jika kunci lokal sudah wujud sementara menunggu pengesahan awan
+            if (getActiveGeminiKey()) {
+                refreshAiBadgeFromKey();
+            }
+
             try {
-                app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
+                const app = initializeApp(firebaseConfig);
+                const auth = getAuth(app);
                 db = getFirestore(app);
 
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -708,80 +801,84 @@
                     cloudUser = cred.user;
                 }
 
-                // Pantau konfigurasi API Key awan secara masa nyata supaya pelajar automatik terima kunci daripada Admin
                 if (db && cloudUser) {
+                    // 1. Dengar secara masa nyata daripada laluan awan utama Admin
                     const publicConfigRef = doc(db, 'artifacts', appId, 'public', 'data', 'admin_settings', 'gemini_config');
                     onSnapshot(publicConfigRef, (snap) => {
+                        isCloudConfigLoaded = true;
                         if (snap.exists() && snap.data().apiKey) {
-                            sharedCloudApiKey = snap.data().apiKey.trim();
+                            sharedCloudApiKey = sanitizeAsciiKey(snap.data().apiKey);
+                            if (snap.data().model) {
+                                activeGeminiModel = snap.data().model;
+                                localStorage.setItem(LOCAL_ACTIVE_MODEL_STORAGE, activeGeminiModel);
+                            }
+                            saveLocalGeminiKey(sharedCloudApiKey);
+                        }
+                        refreshAiBadgeFromKey();
+                    }, () => {
+                        isCloudConfigLoaded = true;
+                        refreshAiBadgeFromKey();
+                    });
+
+                    // 2. Juga segerakkan dengan koleksi ringkas config/gemini supaya serasi 100%
+                    const legacyConfigRef = doc(db, 'config', 'gemini');
+                    onSnapshot(legacyConfigRef, (snap) => {
+                        isCloudConfigLoaded = true;
+                        if (!sharedCloudApiKey && snap.exists() && snap.data().apiKey) {
+                            sharedCloudApiKey = sanitizeAsciiKey(snap.data().apiKey);
+                            if (snap.data().model) {
+                                activeGeminiModel = snap.data().model;
+                                localStorage.setItem(LOCAL_ACTIVE_MODEL_STORAGE, activeGeminiModel);
+                            }
                             saveLocalGeminiKey(sharedCloudApiKey);
                             refreshAiBadgeFromKey();
                         }
-                    }, async () => {
-                        // Sandaran jika guna koleksi config/gemini lama
-                        try {
-                            const legacyRef = doc(db, 'config', 'gemini');
-                            const legacySnap = await getDoc(legacyRef);
-                            if (legacySnap.exists() && legacySnap.data().apiKey) {
-                                sharedCloudApiKey = legacySnap.data().apiKey.trim();
-                                saveLocalGeminiKey(sharedCloudApiKey);
-                                refreshAiBadgeFromKey();
-                            }
-                        } catch (e) {}
-                    });
+                    }, () => {});
                 }
             } catch (err) {
-                console.warn("Mod Firebase sandaran:", err.message);
+                console.warn("Mod sandaran lokal aktif:", err.message);
+                isCloudConfigLoaded = true;
+                refreshAiBadgeFromKey();
             }
-            refreshAiBadgeFromKey();
         }
 
-        function setAiStatus(state, text) {
+        function refreshAiBadgeFromKey() {
             const badge = document.getElementById('aiConnectionBadge');
             const dot = document.getElementById('aiStatusDot');
             const label = document.getElementById('aiStatusText');
             if (!badge || !dot || !label) return;
 
-            label.textContent = text;
-            if (state === 'connected') {
+            if (getActiveGeminiKey()) {
+                label.textContent = 'Tutor AI Aktif';
                 badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-semibold';
                 dot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+            } else if (!isCloudConfigLoaded) {
+                label.textContent = 'Menyambung Tutor AI...';
+                badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[11px] font-medium';
+                dot.className = 'w-2 h-2 rounded-full bg-slate-400 animate-pulse';
             } else {
+                label.textContent = 'Sedia Dikonfigurasi';
                 badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[11px] font-medium';
                 dot.className = 'w-2 h-2 rounded-full bg-amber-500';
             }
         }
 
-        function refreshAiBadgeFromKey() {
-            const key = getActiveGeminiKey();
-            if (key) {
-                setAiStatus('connected', 'AI Sedia');
-            } else {
-                setAiStatus('error', 'Menunggu Admin');
-            }
-        }
-
         // =========================================================================
-        // 2. PORTAL ADMIN (LOG MASUK + PENGURUSAN API KEY)
+        // 2. PORTAL ADMIN
         // =========================================================================
         function openAdminPortal() {
             const modal = document.getElementById('adminPortalModal');
-            const loginView = document.getElementById('adminLoginView');
-            const dashView = document.getElementById('adminDashboardView');
-            const errEl = document.getElementById('adminLoginError');
-
-            errEl.classList.add('hidden');
+            document.getElementById('adminLoginError').classList.add('hidden');
             document.getElementById('adminPasswordInput').value = '';
 
             if (isAdminAuthenticated) {
-                loginView.classList.add('hidden');
-                dashView.classList.remove('hidden');
+                document.getElementById('adminLoginView').classList.add('hidden');
+                document.getElementById('adminDashboardView').classList.remove('hidden');
                 populateAdminDashboard();
             } else {
-                dashView.classList.add('hidden');
-                loginView.classList.remove('hidden');
+                document.getElementById('adminDashboardView').classList.add('hidden');
+                document.getElementById('adminLoginView').classList.remove('hidden');
             }
-
             modal.classList.remove('hidden');
             if (window.lucide) lucide.createIcons();
         }
@@ -793,7 +890,6 @@
         function verifyAdminLogin() {
             const passInput = document.getElementById('adminPasswordInput').value;
             const errEl = document.getElementById('adminLoginError');
-
             if (passInput === getAdminPassword()) {
                 isAdminAuthenticated = true;
                 errEl.classList.add('hidden');
@@ -802,7 +898,7 @@
                 populateAdminDashboard();
                 showToast('Selamat datang ke Panel Admin SOKRA!');
             } else {
-                errEl.textContent = '❌ Kata laluan Admin tidak tepat. Sila cuba lagi.';
+                errEl.textContent = '❌ Kata laluan Admin tidak tepat.';
                 errEl.classList.remove('hidden');
             }
         }
@@ -810,7 +906,7 @@
         function logoutAdmin() {
             isAdminAuthenticated = false;
             closeAdminPortal();
-            showToast('Anda telah log keluar daripada Panel Admin.');
+            showToast('Log keluar daripada Panel Admin.');
         }
 
         function populateAdminDashboard() {
@@ -818,23 +914,23 @@
             const maskEl = document.getElementById('adminCurrentKeyMask');
             const syncEl = document.getElementById('adminCloudSyncInfo');
             const inputEl = document.getElementById('adminApiKeyInput');
-            const resEl = document.getElementById('adminKeyTestResult');
+            document.getElementById('adminKeyTestResult').classList.add('hidden');
 
-            resEl.classList.add('hidden');
-            inputEl.value = currentKey;
+            // Kosongkan input supaya tidak tertampal aksara peluru bertindih
+            inputEl.value = '';
             inputEl.type = 'password';
 
             if (currentKey) {
                 const masked = currentKey.length > 10
-                    ? `${currentKey.slice(0, 6)}••••••••••••••••${currentKey.slice(-4)}`
+                    ? `${currentKey.slice(0, 6)}••••••••••••${currentKey.slice(-4)}`
                     : '••••••••••••';
                 maskEl.textContent = masked;
                 syncEl.textContent = cloudUser
-                    ? '✅ Aktif & disegerakkan ke awan (pelajar boleh terus guna)'
+                    ? '✅ Aktif & disegerakkan ke awan untuk semua pelajar'
                     : '✅ Aktif dalam pelayar ini';
             } else {
                 maskEl.textContent = 'Belum ada API Key ditetapkan';
-                syncEl.textContent = 'Sila tampal kunci Gemini API di bawah untuk mengaktifkan sistem.';
+                syncEl.textContent = 'Sila tampal kunci Gemini API di bawah.';
             }
             if (window.lucide) lucide.createIcons();
         }
@@ -847,7 +943,7 @@
             }
             localStorage.setItem(LOCAL_ADMIN_PASS_STORAGE, newPass);
             document.getElementById('newAdminPassInput').value = '';
-            showToast('✅ Kata laluan Admin berjaya dikemas kini!');
+            showToast('✅ Kata laluan Admin berjaya ditukar!');
         }
 
         function toggleApiKeyVisibility() {
@@ -859,29 +955,47 @@
             saveLocalGeminiKey('');
             sharedCloudApiKey = '';
             document.getElementById('adminApiKeyInput').value = '';
-
             if (db && cloudUser) {
+                const emptyPayload = { apiKey: '', updatedAt: new Date().toISOString() };
                 try {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admin_settings', 'gemini_config'), {
-                        apiKey: '',
-                        updatedAt: new Date().toISOString()
-                    }, { merge: true });
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admin_settings', 'gemini_config'), emptyPayload, { merge: true });
+                } catch (e) {}
+                try {
+                    await setDoc(doc(db, 'config', 'gemini'), emptyPayload, { merge: true });
                 } catch (e) {}
             }
-
             populateAdminDashboard();
             refreshAiBadgeFromKey();
-            const statusMsg = document.getElementById('adminKeyTestResult');
-            statusMsg.className = 'text-xs font-medium px-3 py-2 rounded-xl bg-amber-50 text-amber-800 border border-amber-200';
-            statusMsg.textContent = 'Kunci API telah dipadam daripada sistem.';
-            statusMsg.classList.remove('hidden');
+            showToast('Kunci API telah dipadam daripada awan & pelayar.');
+        }
+
+        async function discoverWorkingModel(candidateKey) {
+            // Semak senarai model sebenar yang aktif pada kunci ini jika kunci bermula dengan AIza
+            if (candidateKey.startsWith('AIza')) {
+                try {
+                    const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(candidateKey)}`);
+                    if (listRes.ok) {
+                        const listData = await listRes.json();
+                        const models = (listData.models || [])
+                            .filter(m => (m.supportedGenerationMethods || []).includes('generateContent'))
+                            .map(m => m.name.replace('models/', ''));
+                        const preferred = ['gemini-2.5-flash', 'gemini-2.5-pro', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+                        for (const p of preferred) {
+                            if (models.includes(p)) return p;
+                        }
+                        if (models.length) return models[0];
+                    }
+                } catch (e) {}
+            }
+            return 'gemini-2.5-flash';
         }
 
         async function testAndSaveAdminKey() {
             const input = document.getElementById('adminApiKeyInput');
             const btn = document.getElementById('saveAdminKeyBtn');
             const statusMsg = document.getElementById('adminKeyTestResult');
-            const candidateKey = input.value.trim();
+            const candidateKey = sanitizeApiKey(input.value);
+            input.value = candidateKey;
 
             if (!candidateKey) {
                 statusMsg.className = 'text-xs font-medium px-3 py-2 rounded-xl bg-rose-50 text-rose-700 border border-rose-200';
@@ -891,17 +1005,24 @@
             }
 
             btn.disabled = true;
-            btn.innerHTML = `<span class="animate-spin inline-block w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full"></span><span>Menguji Kunci...</span>`;
+            btn.innerHTML = `<span class="animate-spin inline-block w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full"></span><span>Mengesahkan &amp; Menyimpan ke Awan...</span>`;
             statusMsg.classList.add('hidden');
 
             try {
-                const testModels = ['gemini-2.5-flash', 'gemini-3-flash-preview'];
+                const detectedModel = await discoverWorkingModel(candidateKey);
+                const attempts = [
+                    { model: detectedModel, vertex: false },
+                    { model: 'gemini-2.5-flash', vertex: false },
+                    { model: 'gemini-2.0-flash', vertex: false },
+                    { model: 'gemini-2.5-flash', vertex: true }
+                ];
                 let connected = false;
+                let verifiedModel = detectedModel;
                 let lastErr = '';
 
-                for (const m of testModels) {
+                for (const att of attempts) {
                     try {
-                        const ep = getGeminiEndpoint(m, candidateKey);
+                        const ep = getGeminiEndpoint(att.model, candidateKey, att.vertex);
                         const res = await fetch(ep.url, {
                             method: 'POST',
                             headers: ep.headers,
@@ -911,6 +1032,7 @@
                         });
                         if (res.ok) {
                             connected = true;
+                            verifiedModel = att.model;
                             break;
                         } else {
                             const errText = await res.text();
@@ -925,22 +1047,28 @@
                     throw new Error(lastErr || 'Kunci API tidak sah atau ditolak oleh Google.');
                 }
 
-                // 1. Simpan secara lokal
+                // 1. Simpan secara lokal + model yang disahkan
+                activeGeminiModel = verifiedModel;
+                localStorage.setItem(LOCAL_ACTIVE_MODEL_STORAGE, verifiedModel);
                 saveLocalGeminiKey(candidateKey);
                 sharedCloudApiKey = candidateKey;
 
-                // 2. Sebar ke Firestore awan supaya pelajar di peranti lain boleh terus guna
+                // 2. Simpan kekal ke kedua-dua laluan Firebase Firestore supaya SEMUA pelajar dapat guna terus secara live!
                 let cloudSaved = false;
                 if (db && cloudUser) {
+                    const cloudPayload = {
+                        apiKey: candidateKey,
+                        model: verifiedModel,
+                        updatedAt: new Date().toISOString()
+                    };
                     try {
-                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admin_settings', 'gemini_config'), {
-                            apiKey: candidateKey,
-                            updatedAt: new Date().toISOString()
-                        }, { merge: true });
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admin_settings', 'gemini_config'), cloudPayload, { merge: true });
                         cloudSaved = true;
-                    } catch (fsErr) {
-                        console.warn('Disimpan secara lokal:', fsErr.message);
-                    }
+                    } catch (fsErr) {}
+                    try {
+                        await setDoc(doc(db, 'config', 'gemini'), cloudPayload, { merge: true });
+                        cloudSaved = true;
+                    } catch (fsErr2) {}
                 }
 
                 populateAdminDashboard();
@@ -948,11 +1076,10 @@
 
                 statusMsg.className = 'text-xs font-medium px-3 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200';
                 statusMsg.textContent = cloudSaved
-                    ? '✅ Berjaya! Kunci API disahkan, disimpan & disebarkan kepada semua pelajar.'
-                    : '✅ Berjaya! Kunci API disahkan & aktif untuk digunakan sekarang.';
+                    ? `✅ Berjaya! Kunci API disahkan (${verifiedModel}) & kekal LIVE di awan untuk semua pelajar!`
+                    : `✅ Berjaya! Kunci API disahkan (${verifiedModel}) dalam pelayar ini. (Nota: Pastikan Firestore Rules membenarkan tulisan untuk sebaran lintas peranti).`;
                 statusMsg.classList.remove('hidden');
-
-                showToast('Kunci Gemini API berjaya disimpan & diaktifkan!');
+                showToast('Kunci Gemini API kekal LIVE untuk semua pelajar!');
             } catch (err) {
                 statusMsg.className = 'text-xs font-medium px-3 py-2 rounded-xl bg-rose-50 text-rose-700 border border-rose-200';
                 statusMsg.textContent = `❌ Gagal mengesahkan kunci: ${err.message}`;
@@ -965,104 +1092,91 @@
         }
 
         // =========================================================================
-        // 3. TERJEMAHAN ANTARA MUKA PELBAGAI BAHASA
+        // 3. TERJEMAHAN BAHASA & WATAK TUTOR
         // =========================================================================
         const I18N = {
             ms: {
-                heroTitle: "Apa yang anda ingin pelajari hari ini?",
-                heroSubtitle: "Pilih watak tutor kartun anda, taip topik atau muat naik nota — AI akan menulis, melukis & menerangkan secara langsung.",
-                placeholder: "Taip topik, soalan kerja rumah, atau tampal teks untuk diajar pada papan putih...",
-                startBtn: "Mula",
+                heroTitle: "Apa yang anda ingin kuasai hari ini?",
+                heroSubtitle: "Taip topik, muat naik gambar kerja rumah atau PDF nota — tutor AI akan melukis setiap langkah, menerangkan secara mendalam, dan berbual 2 hala bersama anda.",
+                placeholder: "Tanya apa sahaja... Contoh: 'Kenapa bola yang ditendang melengkung ke bawah?' atau 'Selesaikan persamaan 2x + 5 = 17'",
+                startBtn: "Mula Belajar di Papan Putih",
                 speechLang: "ms-MY"
             },
             en: {
-                heroTitle: "What do you want to learn today?",
-                heroSubtitle: "Pick your cartoon tutor persona, type a topic or upload notes — AI writes, draws & explains live.",
-                placeholder: "Type a topic, homework question, or paste notes to teach on the whiteboard...",
-                startBtn: "Start",
+                heroTitle: "What do you want to master today?",
+                heroSubtitle: "Type a question, snap your homework or drop in your notes — SOKRA talks it through, drawing every step on the board.",
+                placeholder: "Ask anything... e.g., 'Why does a kicked ball curve?' or 'Solve 2x + 5 = 17'",
+                startBtn: "Start Learning on Board",
                 speechLang: "en-US"
             },
             zh: {
-                heroTitle: "今天你想学习什么内容？",
-                heroSubtitle: "选择你的卡通导师角色，输入主题或上传笔记 — AI 将在白板上实时书写、绘图并讲解。",
-                placeholder: "输入学习主题、作业问题或粘贴笔记...",
-                startBtn: "开始",
+                heroTitle: "今天你想掌握什么知识？",
+                heroSubtitle: "输入问题、拍摄作业或上传笔记 — AI 导师将在白板上逐步绘图、深入讲解并与你双向对话。",
+                placeholder: "输入任何问题或粘贴笔记...",
+                startBtn: "开始白板学习",
                 speechLang: "zh-CN"
             },
             ta: {
-                heroTitle: "இன்று நீங்கள் என்ன கற்றுக்கொள்ள விரும்புகிறீர்கள்?",
-                heroSubtitle: "உங்கள் கார்ட்டூன் ஆசிரியரைத் தேர்ந்தெடுத்து தலைப்பை உள்ளிடவும் — AI நேரடியாக எழுதி வரைந்து விளக்கும்.",
-                placeholder: "தலைப்பு அல்லது வீட்டுப்பாடக் கேள்வியை இங்கே தட்டச்சு செய்க...",
-                startBtn: "தொடங்கு",
+                heroTitle: "இன்று நீங்கள் எதைக் கற்றுக்கொள்ள விரும்புகிறீர்கள்?",
+                heroSubtitle: "கேள்வியைத் தட்டச்சு செய்யவும் அல்லது குறிப்புகளைப் பதிவேற்றவும் — AI ஆசிரியர் ஒவ்வொரு படியையும் வரைந்து விளக்குவார்.",
+                placeholder: "எதையும் கேளுங்கள்...",
+                startBtn: "கற்கத் தொடங்கு",
                 speechLang: "ta-IN"
             },
             ar: {
-                heroTitle: "ماذا تريد أن تتعلم اليوم؟",
-                heroSubtitle: "اختر شخصية المعلم الكرتوني واكتب الموضوع — سيكتب الذكاء الاصطناعي ويرسم ويشرح مباشرة.",
-                placeholder: "اكتب موضوعاً أو سؤالاً ليشرحه المعلم على السبورة...",
-                startBtn: "ابدأ",
+                heroTitle: "ماذا تريد أن تتقن اليوم؟",
+                heroSubtitle: "اكتب سؤالاً أو ارفع صورة واجبك — سيشرح المعلم الذكي ويرسم كل خطوة على السبورة التفاعلية.",
+                placeholder: "اسأل أي شيء...",
+                startBtn: "ابدأ التعلم على السبورة",
                 speechLang: "ar-SA"
             }
         };
 
-        // =========================================================================
-        // 4. WATAK KARTUN TUTOR & PERSONALITI SUARA
-        // =========================================================================
         const CHARACTERS = {
             genius: {
                 id: 'genius',
                 name: 'Professor Genius',
                 role: 'Mentor Akademik',
-                style: 'Teratur, jelas & akademik',
-                accent: '#4f46e5',
+                style: 'Mendalam, teratur & jelas',
                 pitch: 0.95,
                 rate: 0.98,
-                personaPrompt: 'Anda ialah Professor Genius: bertutur dengan teratur, intelektual, jelas, langkah demi langkah seperti profesor universiti yang penyayang.',
-                greeting: 'Salam ilmu! Mari kita bedah konsep ini secara sistematik di papan putih.'
+                personaPrompt: 'Anda ialah Professor Genius: bertutur dengan intelektual, jelas, membina intuisi mendalam langkah demi langkah seperti profesor terbaik.'
             },
             chill: {
                 id: 'chill',
                 name: 'Bro Chill',
                 role: 'Rakan Belajar Santai',
-                style: 'Santai, analogi harian & kelakar',
-                accent: '#059669',
+                style: 'Analogi santai & mudah hadam',
                 pitch: 1.05,
-                rate: 1.04,
-                personaPrompt: 'Anda ialah Bro Chill: bertutur dengan gaya santai, mesra, guna analogi kehidupan harian yang mudah difahami dan sedikit humor.',
-                greeting: 'Yo! Rileks, benda ni nampak je susah tapi sebenarnya kacang je bila kita lukis!'
+                rate: 1.03,
+                personaPrompt: 'Anda ialah Bro Chill: bertutur mesra, santai, menggunakan analogi kehidupan sebenar yang sangat mudah dibayangkan oleh pelajar.'
             },
             strict: {
                 id: 'strict',
                 name: 'Kapten Tegas',
                 role: 'Jurulatih Peperiksaan',
-                style: 'Padat, disiplin & terus ke poin',
-                accent: '#e11d48',
+                style: 'Fokus markah & perangkap exam',
                 pitch: 0.85,
-                rate: 1.08,
-                personaPrompt: 'Anda ialah Kapten Tegas: bertutur dengan tegas, berdisiplin, ringkas, padat, fokus kepada kata kunci peperiksaan tanpa meleret.',
-                greeting: 'Fokus! Perhatikan setiap langkah penting di papan putih ini dengan teliti.'
+                rate: 1.06,
+                personaPrompt: 'Anda ialah Kapten Tegas: bertutur padat, berdisiplin, menekankan kata kunci skema pemarkahan dan perangkap peperiksaan.'
             },
             cheerful: {
                 id: 'cheerful',
                 name: 'Kakak Ceria',
                 role: 'Pembimbing Positif',
-                style: 'Mesra, memberi semangat & sabar',
-                accent: '#d97706',
-                pitch: 1.24,
-                rate: 1.02,
-                personaPrompt: 'Anda ialah Kakak Ceria: bertutur dengan penuh semangat, lembut, memuji usaha pelajar dan menerangkan dengan sangat sabar.',
-                greeting: 'Wah, topik yang sangat menarik! Jom kita teroka bersama-sama langkah demi langkah!'
+                style: 'Sabar, mesra & membimbing',
+                pitch: 1.22,
+                rate: 1.0,
+                personaPrompt: 'Anda ialah Kakak Ceria: bertutur penuh semangat, lembut, sentiasa memuji usaha pelajar dan membimbing dengan sabar.'
             },
             robot: {
                 id: 'robot',
                 name: 'Robo-Sains',
                 role: 'Unit Analisis Pintar',
-                style: 'Logik tajam, fakta pantas & data',
-                accent: '#0891b2',
+                style: 'Logik tepat, formula & graf',
                 pitch: 0.88,
-                rate: 1.12,
-                personaPrompt: 'Anda ialah Robo-Sains: bertutur dengan gaya robot saintifik pintar, berstruktur logik, menyebut fakta tepat dan formula dengan kemas.',
-                greeting: 'Sistem diaktifkan! Memuat turun struktur konsep ke papan putih digital.'
+                rate: 1.08,
+                personaPrompt: 'Anda ialah Robo-Sains: bertutur sistematik, tepat, menganalisis pemboleh ubah, graf, dan hubungan sebab-akibat dengan jelas.'
             }
         };
 
@@ -1129,7 +1243,7 @@
         }
 
         // =========================================================================
-        // 5. KEADAAN APLIKASI & INISIALISASI
+        // 4. KEADAAN APLIKASI & INISIALISASI
         // =========================================================================
         const state = {
             language: 'ms',
@@ -1144,25 +1258,24 @@
             currentStepIndex: 0,
             chatHistory: [],
             voiceEnabled: true,
-            penColor: '#1e293b',
-            typingTimer: null
+            twoWayAutoListen: true,
+            continuousPlayMode: false,
+            studentDrawEnabled: false,
+            penColor: '#0f172a',
+            typingTimers: []
         };
 
-        const LOCAL_USER_KEY = 'sokra_student_email_v2';
-        const LOCAL_LESSONS_KEY = 'sokra_lessons_history_v2';
+        const LOCAL_USER_KEY = 'sokra_student_email_v3';
+        const LOCAL_LESSONS_KEY = 'sokra_lessons_history_v3';
 
         function initApp() {
             document.getElementById('copyrightYear').textContent = new Date().getFullYear();
 
-            // Render avatar watak pada kad & bar atas workspace
             Object.keys(CHARACTERS).forEach(key => {
                 const cardEl = document.getElementById(`avatar-card-${key}`);
-                if (cardEl) cardEl.innerHTML = getCharacterCartoonSvg(key, 'w-12 h-12');
-                const miniEl = document.querySelector(`[data-mini-avatar="${key}"]`);
-                if (miniEl) miniEl.innerHTML = getCharacterCartoonSvg(key, 'w-6 h-6');
+                if (cardEl) cardEl.innerHTML = getCharacterCartoonSvg(key, 'w-11 h-11');
             });
 
-            // Pulihkan sesi pelajar & sejarah
             const savedEmail = localStorage.getItem(LOCAL_USER_KEY);
             if (savedEmail) {
                 state.userEmail = savedEmail;
@@ -1183,8 +1296,7 @@
 
         function showToast(msg) {
             const banner = document.getElementById('toastBanner');
-            const label = document.getElementById('toastMessage');
-            label.textContent = msg;
+            document.getElementById('toastMessage').textContent = msg;
             banner.classList.remove('hidden');
             clearTimeout(banner._t);
             banner._t = setTimeout(() => banner.classList.add('hidden'), 3400);
@@ -1197,57 +1309,112 @@
             document.getElementById('heroSubtitle').textContent = t.heroSubtitle;
             document.getElementById('heroPromptInput').placeholder = t.placeholder;
             document.getElementById('heroStartBtnText').textContent = t.startBtn;
+            const wsLangSel = document.getElementById('wsLanguageSelector');
+            if (wsLangSel) wsLangSel.value = lang;
         }
 
         function selectCharacter(charKey, announce = true) {
             if (!CHARACTERS[charKey]) return;
             state.character = charKey;
-            const c = CHARACTERS[charKey];
+            const charObj = CHARACTERS[charKey];
 
-            document.querySelectorAll('.char-card').forEach(card => {
-                const isSelected = card.getAttribute('data-char') === charKey;
-                const badge = card.querySelector('.char-badge');
+            document.querySelectorAll('.char-card').forEach(btn => {
+                const isSelected = btn.getAttribute('data-char') === charKey;
+                const badge = btn.querySelector('.char-badge');
                 if (isSelected) {
-                    card.classList.add('border-2', 'border-indigo-600', 'shadow-sm');
-                    card.classList.remove('border', 'border-slate-200');
+                    btn.classList.remove('border', 'border-slate-200', 'shadow-2xs');
+                    btn.classList.add('border-2', 'border-indigo-600', 'shadow-sm', 'active-char');
                     if (badge) badge.classList.remove('hidden');
                 } else {
-                    card.classList.remove('border-2', 'border-indigo-600', 'shadow-sm');
-                    card.classList.add('border', 'border-slate-200');
+                    btn.classList.remove('border-2', 'border-indigo-600', 'shadow-sm', 'active-char');
+                    btn.classList.add('border', 'border-slate-200', 'shadow-2xs');
                     if (badge) badge.classList.add('hidden');
                 }
             });
 
-            document.getElementById('selectedCharacterLabel').textContent = `Aktif: ${c.name}`;
-            document.getElementById('wsCharAvatar').innerHTML = getCharacterCartoonSvg(charKey, 'w-8 h-8');
-            document.getElementById('wsCharName').textContent = c.name;
-            document.getElementById('wsCharStyle').textContent = `Gaya: ${c.style}`;
-            document.getElementById('wsBoardCartoonFigure').innerHTML = getCharacterCartoonSvg(charKey, 'w-12 h-12');
-            document.getElementById('wsBoardMascotName').textContent = c.name;
-            document.getElementById('wsBoardMascotRole').textContent = `• ${c.role}`;
+            const activeLabel = document.getElementById('selectedCharacterLabel');
+            if (activeLabel) activeLabel.textContent = `Aktif: ${charObj.name}`;
 
-            if (announce) showToast(`Watak tutor ditukar kepada ${c.name}`);
+            const wsAvatar = document.getElementById('wsCharAvatar');
+            if (wsAvatar) wsAvatar.innerHTML = getCharacterCartoonSvg(charKey, 'w-8 h-8');
+
+            const wsStyle = document.getElementById('wsCharStyle');
+            if (wsStyle) wsStyle.textContent = `Tutor: ${charObj.name} (${charObj.style})`;
+
+            const wsFigure = document.getElementById('wsBoardCartoonFigure');
+            if (wsFigure) wsFigure.innerHTML = getCharacterCartoonSvg(charKey, 'w-11 h-11');
+
+            const wsMascotName = document.getElementById('wsBoardMascotName');
+            if (wsMascotName) wsMascotName.textContent = charObj.name;
+
+            if (announce) {
+                showToast(`Watak tutor ditukar kepada ${charObj.name}`);
+            }
         }
 
-        function setHeroMode(mode, btnEl) {
-            state.mode = mode;
-            document.querySelectorAll('.hero-mode-btn').forEach(b => {
-                b.className = 'hero-mode-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200/70 transition-all cursor-pointer';
+        function setHeroMode(modeName, clickedBtn) {
+            state.mode = modeName;
+            document.querySelectorAll('.hero-mode-btn').forEach(btn => {
+                btn.className = 'hero-mode-btn inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200/70 transition-all cursor-pointer';
             });
-            if (btnEl) {
-                btnEl.className = 'hero-mode-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-900 text-white transition-all cursor-pointer';
+            if (clickedBtn) {
+                clickedBtn.className = 'hero-mode-btn inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-900 text-white transition-all cursor-pointer';
+            }
+
+            const hints = {
+                'Topic': 'Menerangkan konsep secara mendalam dengan rajah & contoh',
+                'Homework': 'Membimbing langkah demi langkah tanpa terus memberi jawapan akhir',
+                'Exam Prep': 'Ulang kaji padat, perangkap peperiksaan & kuiz 3 soalan'
+            };
+            const hintEl = document.getElementById('modeHelperHint');
+            if (hintEl) hintEl.textContent = hints[modeName] || '';
+        }
+
+        function toggleVoice() {
+            state.voiceEnabled = !state.voiceEnabled;
+            const label = document.getElementById('voiceStatusLabel');
+            if (label) {
+                label.textContent = state.voiceEnabled ? 'Suara: Hidup' : 'Suara: Senyap';
+            }
+            if (!state.voiceEnabled) {
+                stopSpeaking();
+            }
+            showToast(state.voiceEnabled ? 'Suara tutor diaktifkan.' : 'Suara tutor disenyapkan.');
+        }
+
+        async function switchLessonLanguageMidSession(newLang) {
+            changeLanguage(newLang);
+            const mainSel = document.getElementById('languageSelector');
+            if (mainSel) mainSel.value = newLang;
+
+            if (!state.currentLesson) return;
+            const langNames = { ms: 'Bahasa Melayu', en: 'English', zh: 'Mandarin', ta: 'Tamil', ar: 'Arabic' };
+            showToast(`Menukar bahasa pelajaran kepada ${langNames[newLang] || newLang}...`);
+            sendQuickReply(`Sila tukar bahasa pengajaran dan penulisan papan putih kepada ${langNames[newLang] || newLang} mulai sekarang, dan terangkan semula papan semasa dalam bahasa tersebut!`);
+        }
+
+        function toggleContinuousPlay() {
+            state.continuousPlayMode = !state.continuousPlayMode;
+            const btn = document.getElementById('continuousPlayBtn');
+            const label = document.getElementById('continuousPlayLabel');
+            if (state.continuousPlayMode) {
+                label.textContent = 'Mod: Auto-Sambung';
+                btn.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 text-white border border-indigo-600 text-xs font-bold cursor-pointer';
+                showToast('Mod Penerangan Berterusan aktif: Tutor akan menerangkan semua papan secara automatik.');
+            } else {
+                label.textContent = 'Mod: Interaktif';
+                btn.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-indigo-50 border border-slate-200 text-xs font-semibold text-slate-700 cursor-pointer';
+                showToast('Mod Interaktif aktif: Tutor akan berhenti bertanya pada setiap papan.');
             }
         }
 
         // =========================================================================
-        // 6. PENGENDALIAN LAMPIRAN (GAMBAR, PDF/DOKUMEN, PAUTAN URL)
+        // 5. LAMPIRAN GAMBAR, PDF & PAUTAN
         // =========================================================================
         function toggleUrlInput() {
             const bar = document.getElementById('urlInputBar');
             bar.classList.toggle('hidden');
-            if (!bar.classList.contains('hidden')) {
-                document.getElementById('heroUrlField').focus();
-            }
+            if (!bar.classList.contains('hidden')) document.getElementById('heroUrlField').focus();
         }
 
         function attachUrl() {
@@ -1267,36 +1434,34 @@
             for (const file of files) {
                 if (category === 'image') {
                     const dataUrl = await readFileAsDataUrl(file);
-                    const base64 = dataUrl.split(',')[1];
                     state.attachments.push({
                         type: 'image',
                         name: file.name,
                         mimeType: file.type || 'image/png',
-                        base64
+                        base64: dataUrl.split(',')[1]
                     });
                 } else {
                     if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
                         const dataUrl = await readFileAsDataUrl(file);
-                        const base64 = dataUrl.split(',')[1];
                         state.attachments.push({
                             type: 'pdf',
                             name: file.name,
                             mimeType: 'application/pdf',
-                            base64
+                            base64: dataUrl.split(',')[1]
                         });
                     } else {
                         const text = await file.text();
                         state.attachments.push({
                             type: 'text',
                             name: file.name,
-                            content: text.slice(0, 12000)
+                            content: text.slice(0, 14000)
                         });
                     }
                 }
             }
             event.target.value = '';
             renderAttachmentChips();
-            showToast(`${files.length} fail berjaya dilampirkan.`);
+            showToast(`${files.length} bahan dilampirkan.`);
         }
 
         function readFileAsDataUrl(file) {
@@ -1331,7 +1496,7 @@
         }
 
         // =========================================================================
-        // 7. LOG MASUK PELAJAR (GMAIL OTP) & SEJARAH PEMBELAJARAN
+        // 6. LOG MASUK PELAJAR & SEJARAH
         // =========================================================================
         function openLoginModal() {
             document.getElementById('loginModal').classList.remove('hidden');
@@ -1354,7 +1519,7 @@
             const email = document.getElementById('gmailInput').value.trim().toLowerCase();
             const errEl = document.getElementById('loginErrorMsg');
             if (!email || !email.includes('@')) {
-                errEl.textContent = 'Sila masukkan alamat emel Gmail yang sah.';
+                errEl.textContent = 'Sila masukkan alamat Gmail yang sah.';
                 errEl.classList.remove('hidden');
                 return;
             }
@@ -1372,7 +1537,7 @@
             const entered = document.getElementById('otpCodeInput').value.trim();
             const errEl = document.getElementById('otpErrorMsg');
             if (entered !== state.pendingOtp) {
-                errEl.textContent = 'Kod OTP tidak sepadan. Sila semak semula.';
+                errEl.textContent = 'Kod OTP tidak tepat.';
                 errEl.classList.remove('hidden');
                 return;
             }
@@ -1385,8 +1550,7 @@
 
         function renderLoggedInHeader() {
             if (!state.userEmail) return;
-            const section = document.getElementById('authSection');
-            section.innerHTML = `
+            document.getElementById('authSection').innerHTML = `
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-semibold text-indigo-900">
                     <span class="w-5 h-5 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">${state.userEmail[0].toUpperCase()}</span>
                     <span class="max-w-[120px] truncate">${escapeHtml(state.userEmail)}</span>
@@ -1403,7 +1567,7 @@
 
         function saveLessonToHistory(lessonObj) {
             state.lessons.unshift(lessonObj);
-            if (state.lessons.length > 18) state.lessons.pop();
+            if (state.lessons.length > 20) state.lessons.pop();
             try {
                 localStorage.setItem(LOCAL_LESSONS_KEY, JSON.stringify(state.lessons));
             } catch (e) {}
@@ -1412,9 +1576,7 @@
 
         function renderPastLessons() {
             const grid = document.getElementById('pastLessonsGrid');
-            const badge = document.getElementById('historyCountBadge');
-            badge.textContent = `${state.lessons.length} Sesi`;
-
+            document.getElementById('historyCountBadge').textContent = `${state.lessons.length} Sesi`;
             if (!state.lessons.length) return;
 
             grid.innerHTML = state.lessons.map((les, idx) => {
@@ -1423,13 +1585,14 @@
                     <div onclick="reopenPastLesson(${idx})" class="p-4 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 shadow-2xs hover:shadow-md transition-all cursor-pointer flex flex-col justify-between gap-2">
                         <div>
                             <div class="flex items-center justify-between gap-2 mb-1">
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700">${escapeHtml(les.mode || 'Topik')}</span>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700">${escapeHtml(les.mode || 'Topic')}</span>
                                 <span class="text-[10px] text-slate-400">${escapeHtml(les.date || '')}</span>
                             </div>
                             <h3 class="text-xs sm:text-sm font-bold text-slate-900 line-clamp-2">${escapeHtml(les.title)}</h3>
                         </div>
-                        <div class="flex items-center gap-1.5 pt-2 border-t border-slate-100 text-[11px] text-slate-500">
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-[11px] text-slate-500">
                             <span>Tutor: <strong>${escapeHtml(charObj.name)}</strong></span>
+                            <span>${(les.scenes || []).length} Babak →</span>
                         </div>
                     </div>
                 `;
@@ -1444,26 +1607,28 @@
             state.currentStepIndex = 0;
             state.chatHistory = lesson.chatHistory || [];
             openWorkspaceModal();
-            renderWorkspaceStep(0);
+            renderWorkspaceScene(0, false);
             renderChatHistory();
         }
 
         // =========================================================================
-        // 8. ENJIN PENJANAAN PAPAN PUTIH & DIALOG SOKRATIK (GEMINI API)
+        // 7. ENJIN PENGAJARAN MENDALAM AHABOARD (TEACHER'S NOTES + LIVE SCENES)
         // =========================================================================
-        function quickStartIdea(promptText) {
+        function quickStartIdea(promptText, targetMode = 'Topic') {
             document.getElementById('heroPromptInput').value = promptText;
+            const modeBtns = document.querySelectorAll('.hero-mode-btn');
+            const idx = targetMode === 'Homework' ? 1 : targetMode === 'Exam Prep' ? 2 : 0;
+            setHeroMode(targetMode, modeBtns[idx]);
             startFromHero();
         }
 
         async function startFromHero() {
             const promptText = document.getElementById('heroPromptInput').value.trim();
             if (!promptText && !state.attachments.length) {
-                showToast('Sila taip topik atau muat naik gambar/nota terlebih dahulu.');
+                showToast('Sila taip soalan/topik atau muat naik gambar/nota terlebih dahulu.');
                 return;
             }
 
-            // Semak jika kunci API belum dimasukkan oleh Admin
             if (!getActiveGeminiKey()) {
                 showToast('API Key belum ditetapkan. Sila log masuk Panel Admin untuk tampal API Key.');
                 openAdminPortal();
@@ -1472,14 +1637,18 @@
 
             const btn = document.getElementById('heroStartBtn');
             btn.disabled = true;
-            btn.innerHTML = `<span class="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span><span>Menyediakan Papan Putih...</span>`;
+            btn.innerHTML = `<span class="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span><span>Menyusun Pelan Mengajar &amp; Melukis...</span>`;
 
             try {
-                const lesson = await generateWhiteboardLesson(promptText || 'Terangkan bahan yang dilampirkan ini.');
+                const lesson = await generateDeepAhaBoardLesson(promptText || 'Bimbing saya memahami bahan yang dilampirkan ini.');
                 state.currentLesson = lesson;
                 state.currentStepIndex = 0;
                 state.chatHistory = [
-                    { role: 'tutor', text: lesson.openingMessage }
+                    {
+                        role: 'tutor',
+                        text: lesson.openingDialogue,
+                        quickChoices: lesson.initialChoices || []
+                    }
                 ];
 
                 saveLessonToHistory({
@@ -1491,10 +1660,9 @@
                 });
 
                 openWorkspaceModal();
-                renderWorkspaceStep(0);
+                renderWorkspaceScene(0, true);
                 renderChatHistory();
 
-                // Kosongkan input selepas berjaya
                 document.getElementById('heroPromptInput').value = '';
                 state.attachments = [];
                 renderAttachmentChips();
@@ -1511,15 +1679,20 @@
         async function callGeminiWithFallback(contents, systemInstruction, responseMimeType = 'application/json') {
             const apiKey = getActiveGeminiKey();
             if (!apiKey) {
-                throw new Error('Kunci API belum dimasukkan oleh Admin.');
+                throw new Error('Sistem sedang diselenggara oleh Admin. Sila cuba sebentar lagi.');
             }
 
-            const models = ['gemini-2.5-flash', 'gemini-3-flash-preview'];
+            const attempts = [
+                { model: activeGeminiModel || 'gemini-2.5-flash', vertex: false },
+                { model: 'gemini-2.5-flash', vertex: false },
+                { model: 'gemini-2.0-flash', vertex: false },
+                { model: 'gemini-2.5-flash', vertex: true }
+            ];
             let lastError = null;
 
-            for (const model of models) {
+            for (const att of attempts) {
                 try {
-                    const ep = getGeminiEndpoint(model, apiKey);
+                    const ep = getGeminiEndpoint(att.model, apiKey, att.vertex);
                     const payload = {
                         contents,
                         systemInstruction: { parts: [{ text: systemInstruction }] },
@@ -1551,169 +1724,438 @@
             throw lastError || new Error('Gagal berhubung dengan pelayan Gemini.');
         }
 
-        async function generateWhiteboardLesson(userTopic) {
+        async function generateDeepAhaBoardLesson(userTopic) {
             const charObj = CHARACTERS[state.character] || CHARACTERS.genius;
             const langMap = { ms: 'Bahasa Melayu', en: 'English', zh: 'Chinese (Mandarin)', ta: 'Tamil', ar: 'Arabic' };
             const targetLang = langMap[state.language] || 'Bahasa Melayu';
 
+            let modePedagogy = '';
+            if (state.mode === 'Homework') {
+                modePedagogy = `
+MOD KERJA RUMAH (AHABOARD HOMEWORK MODE):
+- JANGAN terus memberikan jawapan akhir di papan putih!
+- Pecahkan masalah kepada langkah-langkah kecil. Pada papan putih, tunjukkan susunan masalah asal, kenal pasti apa yang diketahui & tidak diketahui, dan berikan pembayang (nudge) untuk langkah pertama sahaja.
+- Di dalam "openingDialogue" dan "checkQuestion", minta pelajar mencuba langkah pertama tersebut sendiri!`;
+            } else if (state.mode === 'Exam Prep') {
+                modePedagogy = `
+MOD PERSEDIAAN PEPERIKSAAN (AHABOARD EXAM PREP MODE):
+- Susun ulang kaji menyeluruh berdasarkan topik/nota pelajar.
+- Wajib sertakan 1 babak khusus untuk "⚠️ Perangkap Klasik Peperiksaan (Classic Trap)" supaya pelajar tidak hilang markah.
+- Di akhir sesi, sediakan soalan uji minda.`;
+            } else {
+                modePedagogy = `
+MOD TEROKA TOPIK (AHABOARD TOPIC MODE — DARI "HAH?" KE "AHA!"):
+- Jelaskan konsep secara mendalam, jelas dan membina intuisi sebenar (bukan definisi buku teks yang kering!).
+- Gunakan perbandingan sebelah-menyebelah (side-by-side comparison), analogi dunia nyata, jalan kerja lengkap, dan rajah visual berlabel.`;
+            }
+
             const systemPrompt = `
-Anda ialah SOKRA, tutor papan putih AI interaktif.
+Anda ialah SOKRA (diinspirasikan oleh AhaBoard.ai), tutor papan putih AI bertaraf dunia yang mengajar seperti guru sebenar di hadapan papan putih.
 ${charObj.personaPrompt}
 Bahasa pengajaran wajib: ${targetLang}.
-Mod pembelajaran: ${state.mode}.
+${modePedagogy}
 
-Tugasan anda: Pecahkan topik/soalan pelajar kepada 3 hingga 4 langkah pengajaran visual pada papan putih.
-Untuk SETIAP langkah, hasilkan:
-1. "stepTitle": Tajuk ringkas langkah.
-2. "handwritingNotes": Nota tulisan tangan jelas dan berstruktur (gunakan simbol matematik, anak panah ->, poin penting).
-3. "svgDiagram": Kod SVG yang sah dan bersih (<svg viewBox="0 0 420 200" class="w-full max-w-md mx-auto svg-hand-stroke">...</svg>) yang melukis rajah, graf, segi tiga, litar, atau carta alir berkait dengan langkah tersebut menggunakan warna kontra tinggi (#1e293b, #4f46e5, #059669, #dc2626).
-4. "spokenExplanation": Penerangan lisan ringkas (2-3 ayat) dalam gaya watak ${charObj.name} untuk dibacakan dengan suara.
+Sebelum menulis ke papan putih, fikirkan pelan guru: apakah salah faham biasa pelajar, bagaimanakah urutan visual terbaik supaya pelajar kata "Ohhh, baru faham!", dan lukisan apa yang menjadikan konsep ini sangat jelas.
 
-Pulangkan HANYA JSON sah dengan struktur berikut:
+Bina pelajaran permulaan dengan **5 hingga 6 papan putih yang kaya, mendalam, dan terperinci** (bukan terhad kepada 4 papan ringkas, dan pelajar boleh terus menambah papan baharu tanpa had selepas ini!).
+Setiap papan mesti mengandungi:
+1. "sceneTitle": Tajuk papan yang menarik.
+2. "boardHeading": Tajuk utama tulisan marker di atas papan putih.
+3. "keyConceptBox": Kotak ringkasan idea teras / formula / analogi utama (2-3 ayat jelas).
+4. "handwrittenSteps": Senarai 3 hingga 5 baris nota tulisan tangan guru yang terperinci (menggunakan anak panah "→", perbandingan, jalan kerja langkah demi langkah, atau contoh konkret).
+            Pulangkan HANYA JSON sah dengan struktur tepat ini:
 {
   "title": "Tajuk Pelajaran",
-  "openingMessage": "Ucapan pembukaan mesra & soalan Sokratik pertama kepada pelajar",
-  "steps": [
+  "privateTeacherNotes": {
+    "workedSolution": "Ringkasan jalan kerja/jawapan penuh untuk rujukan guru",
+    "commonStudentMistakes": "Kesilapan lazim yang pelajar selalu buat dalam topik ini",
+    "teachingStrategy": "Strategi urutan visual untuk mencipta momen Aha!"
+  },
+  "openingDialogue": "Ucapan pembukaan guru + penjelasan awal + soalan pertama kepada pelajar untuk memulakan komunikasi 2 hala",
+  "initialChoices": ["Pilihan jawapan 1", "Pilihan jawapan 2"],
+  "scenes": [
     {
-      "stepTitle": "...",
-      "handwritingNotes": "...",
-      "svgDiagram": "<svg viewBox='0 0 420 200' class='w-full max-w-md mx-auto svg-hand-stroke'>...</svg>",
-      "spokenExplanation": "..."
+      "sceneTitle": "...",
+      "boardHeading": "...",
+      "keyConceptBox": "...",
+      "handwrittenSteps": ["Langkah 1...", "Langkah 2...", "Langkah 3..."],
+      "svgDiagram": "<svg viewBox='0 0 520 230' class='w-full max-w-xl mx-auto aha-svg-draw'>...</svg>",
+      "trapOrTakeaway": "...",
+      "spokenNarration": "...",
+      "quickChoices": ["Jawapan A", "Jawapan B"]
     }
   ]
 }`;
 
-            const userParts = [{ text: `Topik / Soalan Pelajar: ${userTopic}` }];
+            const userParts = [{ text: `Permintaan Pelajar: ${userTopic}` }];
             for (const att of state.attachments) {
                 if (att.type === 'image' || att.type === 'pdf') {
-                    userParts.push({
-                        inlineData: { mimeType: att.mimeType, data: att.base64 }
-                    });
+                    userParts.push({ inlineData: { mimeType: att.mimeType, data: att.base64 } });
                 } else if (att.type === 'text' || att.type === 'url') {
-                    userParts.push({ text: `Lampiran (${att.name}):\n${att.content}` });
+                    userParts.push({ text: `Bahan Lampiran (${att.name}):\n${att.content}` });
                 }
             }
 
             const rawJson = await callGeminiWithFallback([{ role: 'user', parts: userParts }], systemPrompt, 'application/json');
             const parsed = JSON.parse(rawJson.replace(/```json|```/g, '').trim());
-            if (!parsed.steps || !parsed.steps.length) {
-                throw new Error('Format papan putih tidak lengkap.');
+            if (!parsed.scenes || !parsed.scenes.length) {
+                throw new Error('Struktur papan putih tidak lengkap.');
             }
             return parsed;
         }
 
         // =========================================================================
-        // 9. PAPAN PUTIH INTERAKTIF, ANIMASI TULISAN TANGAN & SUARA WATAK
+        // 8. PAPAN PUTIH BERANIMASI (TULISAN PEN MARKER + LUKISAN RAJAH)
         // =========================================================================
         function openWorkspaceModal() {
             document.getElementById('workspaceModal').classList.remove('hidden');
             document.getElementById('wsModeBadge').textContent = state.mode;
+            document.getElementById('wsLessonTitle').textContent = state.currentLesson?.title || 'Pelajaran Papan Putih';
+            const wsLangSel = document.getElementById('wsLanguageSelector');
+            if (wsLangSel) wsLangSel.value = state.language;
             resizeStudentCanvas();
             if (window.lucide) lucide.createIcons();
         }
 
         function closeWorkspace() {
             stopSpeaking();
-            clearInterval(state.typingTimer);
+            stopVoiceRecognition();
+            clearAllTypingTimers();
             document.getElementById('workspaceModal').classList.add('hidden');
         }
 
-        function renderWorkspaceStep(stepIdx) {
+        function clearAllTypingTimers() {
+            state.typingTimers.forEach(t => clearInterval(t));
+            state.typingTimers = [];
+        }
+
+        function renderWorkspaceScene(sceneIdx, autoSpeak = true) {
             const lesson = state.currentLesson;
-            if (!lesson || !lesson.steps[stepIdx]) return;
+            if (!lesson || !lesson.scenes[sceneIdx]) return;
 
-            state.currentStepIndex = stepIdx;
-            const step = lesson.steps[stepIdx];
-            const total = lesson.steps.length;
+            clearAllTypingTimers();
+            state.currentStepIndex = sceneIdx;
+            const scene = lesson.scenes[sceneIdx];
+            const total = lesson.scenes.length;
 
-            document.getElementById('wsStepIndicator').textContent = `Langkah ${stepIdx + 1} / ${total}`;
+            document.getElementById('wsSceneBadge').textContent = `Papan ${sceneIdx + 1} / ${total}`;
+            document.getElementById('prevSceneBtn').disabled = sceneIdx === 0;
 
-            // Butang navigasi langkah
+            // Butang nombor papan tanpa had
             const btnContainer = document.getElementById('wsStepButtons');
-            btnContainer.innerHTML = lesson.steps.map((s, i) => `
-                <button type="button" onclick="renderWorkspaceStep(${i})" class="px-2.5 py-1 rounded-lg text-xs font-bold cursor-pointer transition-colors ${i === stepIdx ? 'bg-indigo-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'}">
+            btnContainer.innerHTML = lesson.scenes.map((s, i) => `
+                <button type="button" onclick="renderWorkspaceScene(${i}, true)" class="px-2.5 py-1 rounded-lg text-xs font-bold cursor-pointer transition-colors shrink-0 ${i === sceneIdx ? 'bg-indigo-600 text-white shadow-2xs' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'}">
                     ${i + 1}
                 </button>
             `).join('');
 
             const nextBtn = document.getElementById('nextStepBtn');
-            if (stepIdx >= total - 1) {
-                nextBtn.innerHTML = `<span>Selesai &amp; Kuiz</span><i data-lucide="award" class="w-4 h-4"></i>`;
+            if (sceneIdx >= total - 1) {
+                nextBtn.innerHTML = `<span>+ Teruskan Papan ${total + 1}</span><i data-lucide="sparkles" class="w-4 h-4"></i>`;
             } else {
-                nextBtn.innerHTML = `<span>Langkah Seterusnya</span><i data-lucide="chevron-right" class="w-4 h-4"></i>`;
+                nextBtn.innerHTML = `<span>Papan Seterusnya</span><i data-lucide="chevron-right" class="w-4 h-4"></i>`;
             }
 
-            // Render papan putih dengan kesan pen menulis
+            // Bina susun atur papan putih seperti AhaBoard (Tajuk Marker + Kotak Konsep + Nota Tulisan Tangan + Lukisan SVG + Petua)
             const board = document.getElementById('wsBoardContent');
+            const stepsList = Array.isArray(scene.handwrittenSteps) ? scene.handwrittenSteps : [scene.handwrittenSteps || ''];
+
             board.innerHTML = `
-                <div class="space-y-3">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold">
-                        <span>Langkah ${stepIdx + 1}: ${escapeHtml(step.stepTitle)}</span>
+                <div class="max-w-2xl mx-auto space-y-5 pb-6">
+                    <!-- Tajuk Besar Tulisan Marker -->
+                    <div class="border-b-2 border-slate-900/15 pb-2">
+                        <div class="text-[11px] font-bold uppercase tracking-widest text-indigo-600 mb-0.5">Papan #${sceneIdx + 1}: ${escapeHtml(scene.sceneTitle || '')}</div>
+                        <h2 id="wbHeadingTarget" class="wb-title-font text-3xl sm:text-4xl font-bold text-slate-900 leading-tight"></h2>
                     </div>
-                    <div id="handwritingTarget" class="font-handwriting text-2xl sm:text-3xl text-slate-800 leading-relaxed whitespace-pre-line"></div>
-                    <div id="diagramTarget" class="pt-2 opacity-0 transition-opacity duration-500">
-                        ${step.svgDiagram || ''}
+
+                    <!-- Kotak Idea Teras / Analogi -->
+                    <div id="wbConceptBox" class="opacity-0 transition-opacity duration-500 p-3.5 sm:p-4 rounded-2xl bg-amber-50/80 border-2 border-amber-300/80 shadow-2xs">
+                        <div class="wb-hand-font text-lg sm:text-xl text-slate-900 leading-snug">
+                            <span class="marker-highlight-yellow font-bold">💡 Konsep Utama:</span>
+                            <span>${escapeHtml(scene.keyConceptBox || '')}</span>
+                        </div>
                     </div>
+
+                    <!-- Lukisan Rajah Papan Putih (SVG Beranimasi) -->
+                    <div id="wbDiagramBox" class="opacity-0 transition-opacity duration-500 p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
+                        ${scene.svgDiagram || ''}
+                    </div>
+
+                    <!-- Langkah & Jalan Kerja Tulisan Tangan Berurutan -->
+                    <div class="space-y-2.5 pt-1" id="wbHandwrittenLines">
+                        ${stepsList.map((_, i) => `
+                            <div id="wbLine_${i}" class="wb-hand-font text-xl sm:text-2xl text-slate-800 leading-relaxed pl-3 border-l-4 ${i % 2 === 0 ? 'border-indigo-500' : 'border-emerald-500'}"></div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Kotak Takeaway / Perangkap Peperiksaan -->
+                    ${scene.trapOrTakeaway ? `
+                        <div id="wbTakeawayBox" class="opacity-0 transition-opacity duration-500 p-3.5 rounded-2xl bg-indigo-50/80 border border-indigo-200 text-indigo-950 wb-note-font text-sm sm:text-base">
+                            ${escapeHtml(scene.trapOrTakeaway)}
+                        </div>
+                    ` : ''}
                 </div>
             `;
 
-            animateHandwritingText(step.handwritingNotes || '', () => {
-                const diag = document.getElementById('diagramTarget');
-                if (diag) diag.classList.remove('opacity-0');
+            // Animasi menulis berurutan seperti tangan cikgu di papan putih
+            animateTextElement('wbHeadingTarget', scene.boardHeading || scene.sceneTitle || '', 16, () => {
+                document.getElementById('wbConceptBox')?.classList.remove('opacity-0');
+                document.getElementById('wbDiagramBox')?.classList.remove('opacity-0');
+                animateLinesSequentially(stepsList, 0, () => {
+                    document.getElementById('wbTakeawayBox')?.classList.remove('opacity-0');
+                });
             });
 
-            document.getElementById('wsBoardSpeechBubble').textContent = step.spokenExplanation || '';
-            speakTextWithCharacter(step.spokenExplanation || '');
+            // Kemas kini gelembung ucapan tutor & bacakan dengan suara
+            const narration = scene.spokenNarration || '';
+            document.getElementById('wsBoardSpeechBubble').textContent = narration;
+
+            if (sceneIdx > 0 && narration) {
+                // Tambah penerangan babak baharu ke dalam dialog 2 hala supaya pelajar boleh terus balas
+                const lastMsg = state.chatHistory[state.chatHistory.length - 1];
+                if (!lastMsg || lastMsg.text !== narration) {
+                    state.chatHistory.push({
+                        role: 'tutor',
+                        text: narration,
+                        quickChoices: scene.quickChoices || []
+                    });
+                    renderChatHistory();
+                }
+            }
+
+            if (autoSpeak && narration) {
+                speakTextWithCharacter(narration, () => {
+                    const isModalOpen = !document.getElementById('workspaceModal').classList.contains('hidden');
+                    if (!isModalOpen) return;
+
+                    if (state.continuousPlayMode && sceneIdx < total - 1) {
+                        setTimeout(() => renderWorkspaceScene(sceneIdx + 1, true), 900);
+                    } else if (state.twoWayAutoListen) {
+                        startTwoWayMicListen();
+                    }
+                });
+            }
+
             if (window.lucide) lucide.createIcons();
         }
 
-        function animateHandwritingText(fullText, onComplete) {
-            clearInterval(state.typingTimer);
-            const target = document.getElementById('handwritingTarget');
-            if (!target) return;
-
-            let i = 0;
-            state.typingTimer = setInterval(() => {
-                if (i <= fullText.length) {
-                    target.innerHTML = `${escapeHtml(fullText.slice(0, i))}<span class="writing-pen-cursor">✒️</span>`;
-                    i += 2;
+        function animateTextElement(elId, fullText, speedMs, onDone) {
+            const el = document.getElementById(elId);
+            if (!el) return;
+            let idx = 0;
+            const timer = setInterval(() => {
+                if (idx <= fullText.length) {
+                    el.innerHTML = `${escapeHtml(fullText.slice(0, idx))}<span class="live-marker-nib">🖊️</span>`;
+                    idx += 2;
                 } else {
-                    clearInterval(state.typingTimer);
-                    target.textContent = fullText;
-                    if (onComplete) onComplete();
+                    clearInterval(timer);
+                    el.textContent = fullText;
+                    if (onDone) onDone();
                 }
-            }, 18);
+            }, speedMs);
+            state.typingTimers.push(timer);
         }
 
-        function replayHandwritingStep() {
-            renderWorkspaceStep(state.currentStepIndex);
+        function animateLinesSequentially(lines, lineIndex, onAllDone) {
+            if (lineIndex >= lines.length) {
+                if (onAllDone) onAllDone();
+                return;
+            }
+            animateTextElement(`wbLine_${lineIndex}`, lines[lineIndex], 14, () => {
+                animateLinesSequentially(lines, lineIndex + 1, onAllDone);
+            });
+        }
+
+        function replayCurrentScene() {
+            renderWorkspaceScene(state.currentStepIndex, true);
+        }
+
+        function prevWsScene() {
+            if (state.currentStepIndex > 0) {
+                renderWorkspaceScene(state.currentStepIndex - 1, true);
+            }
         }
 
         function nextWsStep() {
             const lesson = state.currentLesson;
             if (!lesson) return;
-            if (state.currentStepIndex < lesson.steps.length - 1) {
-                renderWorkspaceStep(state.currentStepIndex + 1);
+            if (state.currentStepIndex < lesson.scenes.length - 1) {
+                renderWorkspaceScene(state.currentStepIndex + 1, true);
             } else {
-                triggerQuickQuiz();
+                // Seperti AhaBoard: apabila sampai hujung, terus bina Papan Baharu (#N+1) secara dinamik!
+                generateNextDynamicBoard();
             }
         }
 
-        // Suara Watak Kartun (Web Speech API)
-        function toggleVoice() {
-            state.voiceEnabled = !state.voiceEnabled;
-            document.getElementById('voiceStatusLabel').textContent = state.voiceEnabled ? 'Suara: Hidup' : 'Suara: Senyap';
-            if (!state.voiceEnabled) stopSpeaking();
+        async function generateNextDynamicBoard(customFocus = '') {
+            const lesson = state.currentLesson;
+            if (!lesson) return;
+
+            const addBtn = document.getElementById('addMoreBoardBtn');
+            const nextBtn = document.getElementById('nextStepBtn');
+            if (addBtn) addBtn.disabled = true;
+            if (nextBtn) {
+                nextBtn.disabled = true;
+                nextBtn.innerHTML = `<span class="animate-spin inline-block w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full"></span><span>Melukis Papan #${lesson.scenes.length + 1}...</span>`;
+            }
+
+            try {
+                const charObj = CHARACTERS[state.character] || CHARACTERS.genius;
+                const langMap = { ms: 'Bahasa Melayu', en: 'English', zh: 'Chinese (Mandarin)', ta: 'Tamil', ar: 'Arabic' };
+                const targetLang = langMap[state.language] || 'Bahasa Melayu';
+                const existingTitles = lesson.scenes.map((s, idx) => `Papan ${idx + 1}: ${s.sceneTitle}`).join('\n');
+                const recentChat = state.chatHistory.slice(-6).map(m => `${m.role}: ${m.text}`).join('\n');
+                const nextNum = lesson.scenes.length + 1;
+
+                const sysPrompt = `
+Anda ialah ${charObj.name} dalam SOKRA (Tutor Papan Putih Tanpa Had seperti AhaBoard.ai).
+${charObj.personaPrompt}
+Bahasa wajib: ${targetLang}.
+Topik pelajaran: "${lesson.title}".
+Papan yang telah diajar setakat ini:
+${existingTitles}
+
+Perbualan terkini dengan pelajar:
+${recentChat}
+
+Bina **Papan Putih #${nextNum}** yang menyambung pengajaran secara mendalam (contohnya: aplikasi lanjutan, contoh soalan peperiksaan sebenar dengan jalan kerja, perbandingan kes khas, atau latihan berpandu). Jangan ulang isi papan sebelumnya!
+Pulangkan HANYA JSON sah bagi 1 papan baharu:
+{
+  "sceneTitle": "Tajuk Papan #${nextNum}",
+  "boardHeading": "Tajuk Besar Marker",
+  "keyConceptBox": "Ringkasan idea teras / formula papan ini",
+  "handwrittenSteps": ["Langkah tulisan tangan 1...", "Langkah 2...", "Langkah 3...", "Langkah 4..."],
+  "svgDiagram": "<svg viewBox='0 0 520 230' class='w-full max-w-xl mx-auto aha-svg-draw'>...</svg>",
+  "trapOrTakeaway": "💡 Takeaway atau ⚠️ Perangkap Exam",
+  "spokenNarration": "Penerangan lisan guru (4-6 ayat) + 1 soalan 2 hala kepada pelajar",
+  "quickChoices": ["Pilihan jawapan 1", "Pilihan jawapan 2"]
+}`;
+
+                const userPrompt = customFocus
+                    ? `Bina Papan #${nextNum} khusus untuk menerangkan: ${customFocus}`
+                    : `Teruskan pengajaran ke Papan #${nextNum} dengan contoh mendalam dan rajah baharu.`;
+
+                const raw = await callGeminiWithFallback(
+                    [{ role: 'user', parts: [{ text: userPrompt }] }],
+                    sysPrompt,
+                    'application/json'
+                );
+                const newScene = JSON.parse(raw.replace(/```json|```/g, '').trim());
+                lesson.scenes.push(newScene);
+                renderWorkspaceScene(lesson.scenes.length - 1, true);
+                showToast(`✨ Papan #${lesson.scenes.length} berjaya dibuka!`);
+            } catch (err) {
+                showToast(`Gagal menambah papan baharu: ${err.message}`);
+            } finally {
+                if (addBtn) addBtn.disabled = false;
+                if (nextBtn) nextBtn.disabled = false;
+                if (window.lucide) lucide.createIcons();
+            }
+        }
+
+        function exportLessonNotes() {
+            const lesson = state.currentLesson;
+            if (!lesson) return;
+            let textOut = `=== NOTA PAPAN PUTIH SOKRA: ${lesson.title} ===\n\n`;
+            (lesson.scenes || []).forEach((s, idx) => {
+                textOut += `Babak ${idx + 1}: ${s.boardHeading || s.sceneTitle}\n`;
+                textOut += `Konsep Utama: ${s.keyConceptBox}\n`;
+                (s.handwrittenSteps || []).forEach(line => {
+                    textOut += `  • ${line}\n`;
+                });
+                if (s.trapOrTakeaway) textOut += `Nota Penting: ${s.trapOrTakeaway}\n`;
+                textOut += `\n`;
+            });
+
+            const ta = document.createElement('textarea');
+            ta.value = textOut;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            showToast('✅ Semua nota papan putih berjaya disalin!');
+        }
+
+        function downloadFullWhiteboardHtml() {
+            const lesson = state.currentLesson;
+            if (!lesson) return;
+
+            const boardsHtml = (lesson.scenes || []).map((s, idx) => `
+                <section style="background:#fff;border:2px solid #e2e8f0;border-radius:18px;padding:24px;margin-bottom:24px;page-break-inside:avoid;">
+                    <div style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:0.08em;">Papan #${idx + 1}: ${escapeHtml(s.sceneTitle || '')}</div>
+                    <h2 style="font-family:'Caveat',cursive;font-size:32px;margin:4px 0 14px;color:#0f172a;border-bottom:2px solid #f1f5f9;padding-bottom:8px;">${escapeHtml(s.boardHeading || s.sceneTitle || '')}</h2>
+                    <div style="background:#fffbeb;border:1.5px solid #fcd34d;border-radius:12px;padding:12px 16px;margin-bottom:16px;font-family:'Kalam',cursive;font-size:19px;">
+                        <strong>💡 Konsep Utama:</strong> ${escapeHtml(s.keyConceptBox || '')}
+                    </div>
+                    <div style="text-align:center;margin:14px 0;">${s.svgDiagram || ''}</div>
+                    <div style="font-family:'Kalam',cursive;font-size:20px;line-height:1.65;color:#1e293b;">
+                        ${(s.handwrittenSteps || []).map(st => `<div style="border-left:4px solid #6366f1;padding-left:12px;margin-bottom:8px;">${escapeHtml(st)}</div>`).join('')}
+                    </div>
+                    ${s.trapOrTakeaway ? `<div style="margin-top:14px;background:#eef2ff;border:1px solid #c7d2fe;border-radius:12px;padding:10px 14px;font-size:14px;color:#1e1b4b;">${escapeHtml(s.trapOrTakeaway)}</div>` : ''}
+                </section>
+            `).join('');
+
+            const fullDoc = `<!DOCTYPE html>
+<html lang="${state.language}">
+<head>
+<meta charset="UTF-8">
+<title>Nota Papan Putih — ${escapeHtml(lesson.title)}</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;600;800&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body style="font-family:'Inter',sans-serif;background:#f8fafc;color:#0f172a;max-width:860px;margin:0 auto;padding:32px 20px;">
+    <header style="text-align:center;margin-bottom:28px;">
+        <div style="font-size:12px;font-weight:800;color:#4f46e5;letter-spacing:0.1em;">NOTA PAPAN PUTIH SOKRA AI</div>
+        <h1 style="font-size:28px;font-weight:800;margin:6px 0;">${escapeHtml(lesson.title)}</h1>
+        <p style="font-size:13px;color:#64748b;">Dijana pada ${new Date().toLocaleDateString('ms-MY')}</p>
+    </header>
+    ${boardsHtml}
+</body>
+</html>`;
+
+            const blob = new Blob([fullDoc], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `SOKRA-Papan-Putih-${(lesson.title || 'Nota').replace(/[^a-zA-Z0-9]/g, '_').slice(0, 32)}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('✅ Fail papan putih lengkap berjaya dimuat turun!');
+        }
+
+        function toggleTwoWayAutoListen() {
+            state.twoWayAutoListen = !state.twoWayAutoListen;
+            const btn = document.getElementById('twoWayVoiceLoopBtn');
+            const label = document.getElementById('twoWayLoopLabel');
+            if (state.twoWayAutoListen) {
+                label.textContent = 'Bual 2 Hala: Hidup';
+                btn.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-xs font-bold text-emerald-800 cursor-pointer';
+                showToast('Bual 2 Hala diaktifkan: Mikrofon akan mendengar secara automatik selepas tutor bercakap.');
+            } else {
+                label.textContent = 'Bual 2 Hala: Manual';
+                btn.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-600 cursor-pointer';
+                stopVoiceRecognition();
+            }
         }
 
         function stopSpeaking() {
             if ('speechSynthesis' in window) window.speechSynthesis.cancel();
             document.getElementById('wsBoardCartoonFigure')?.classList.remove('mascot-speaking');
+            const wave = document.getElementById('speakingWaveIndicator');
+            if (wave) {
+                wave.classList.add('hidden');
+                wave.classList.remove('flex');
+            }
         }
 
-        function speakTextWithCharacter(text) {
-            if (!state.voiceEnabled || !text || !('speechSynthesis' in window)) return;
+        function speakTextWithCharacter(text, onFinishedCallback = null) {
+            if (!state.voiceEnabled || !text || !('speechSynthesis' in window)) {
+                if (onFinishedCallback) onFinishedCallback();
+                return;
+            }
             stopSpeaking();
+            stopVoiceRecognition();
 
             const charObj = CHARACTERS[state.character] || CHARACTERS.genius;
             const utter = new SpeechSynthesisUtterance(text);
@@ -1722,20 +2164,50 @@ Pulangkan HANYA JSON sah dengan struktur berikut:
             utter.rate = charObj.rate;
 
             const figure = document.getElementById('wsBoardCartoonFigure');
-            utter.onstart = () => figure?.classList.add('mascot-speaking');
-            utter.onend = () => figure?.classList.remove('mascot-speaking');
-            utter.onerror = () => figure?.classList.remove('mascot-speaking');
+            const wave = document.getElementById('speakingWaveIndicator');
+
+            utter.onstart = () => {
+                figure?.classList.add('mascot-speaking');
+                if (wave) {
+                    wave.classList.remove('hidden');
+                    wave.classList.add('flex');
+                }
+            };
+            utter.onend = () => {
+                figure?.classList.remove('mascot-speaking');
+                if (wave) {
+                    wave.classList.add('hidden');
+                    wave.classList.remove('flex');
+                }
+                if (onFinishedCallback) onFinishedCallback();
+            };
+            utter.onerror = () => {
+                figure?.classList.remove('mascot-speaking');
+                if (wave) {
+                    wave.classList.add('hidden');
+                    wave.classList.remove('flex');
+                }
+            };
 
             window.speechSynthesis.speak(utter);
         }
 
+        // Pelajar menyampuk tutor pada bila-bila masa ("Cut in anytime")
+        function cutInAndSpeak() {
+            stopSpeaking();
+            showToast('Tutor berhenti bercakap — sila tanya atau jawab sekarang!');
+            startTwoWayMicListen();
+            document.getElementById('wsChatInput').focus();
+        }
+
         // =========================================================================
-        // 10. DIALOG SOKRATIK & KUIZ PANTAS
+        // 10. DIALOG 2 HALA SEBENAR (TUTOR KEMAS KINI PAPAN PUTIH MENGIKUT JAWAPAN PELAJAR)
         // =========================================================================
         function renderChatHistory() {
             const container = document.getElementById('wsChatMessages');
             const charObj = CHARACTERS[state.character] || CHARACTERS.genius;
-            container.innerHTML = state.chatHistory.map(m => {
+
+            container.innerHTML = state.chatHistory.map((m, idx) => {
                 if (m.role === 'user') {
                     return `
                         <div class="flex justify-end">
@@ -1745,76 +2217,245 @@ Pulangkan HANYA JSON sah dengan struktur berikut:
                         </div>
                     `;
                 }
+
+                const isLast = idx === state.chatHistory.length - 1;
+                const choicesHtml = (isLast && Array.isArray(m.quickChoices) && m.quickChoices.length)
+                    ? `<div class="flex flex-wrap gap-1.5 pt-2">
+                        ${m.quickChoices.map(ch => `
+                            <button type="button" onclick="sendQuickReply('${escapeHtml(ch).replace(/'/g, "\\'")}')" class="px-2.5 py-1 rounded-full bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-800 text-[11px] font-semibold cursor-pointer text-left transition-colors">
+                                💬 ${escapeHtml(ch)}
+                            </button>
+                        `).join('')}
+                       </div>`
+                    : '';
+
                 return `
                     <div class="flex items-start gap-2">
-                        <div class="w-7 h-7 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 overflow-hidden">
+                        <div class="w-7 h-7 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 overflow-hidden mt-0.5">
                             ${getCharacterCartoonSvg(state.character, 'w-6 h-6')}
                         </div>
-                        <div class="max-w-[85%] px-3.5 py-2.5 rounded-2xl rounded-bl-xs bg-white border border-slate-200 text-slate-800 text-xs sm:text-sm shadow-2xs space-y-1">
+                        <div class="max-w-[88%] px-3.5 py-2.5 rounded-2xl rounded-bl-xs bg-white border border-slate-200 text-slate-800 text-xs sm:text-sm shadow-2xs space-y-1">
                             <div class="text-[10px] font-bold text-indigo-600">${escapeHtml(charObj.name)}</div>
                             <div class="leading-relaxed whitespace-pre-line">${escapeHtml(m.text)}</div>
+                            ${choicesHtml}
                         </div>
                     </div>
                 `;
             }).join('');
+
             container.scrollTop = container.scrollHeight;
         }
 
         function sendQuickReply(text) {
+            stopSpeaking();
             document.getElementById('wsChatInput').value = text;
             handleWsChatSubmit(new Event('submit'));
         }
 
-        function triggerQuickQuiz() {
-            sendQuickReply('Uji kefahaman saya dengan 1 soalan kuiz pendek tentang topik ini.');
+        function triggerExamQuizMode() {
+            sendQuickReply('Berikan saya Kuiz 3 Soalan untuk menguji kefahaman saya tentang topik ini. Tanya soalan pertama dahulu!');
         }
 
-        async function handleWsChatSubmit(e) {
-            e.preventDefault();
+        async function handleWsChatSubmit(event) {
+            if (event) event.preventDefault();
             const input = document.getElementById('wsChatInput');
-            const msg = input.value.trim();
-            if (!msg) return;
+            const sendBtn = document.getElementById('wsSendBtn');
+            const userMsg = (input?.value || '').trim();
+            if (!userMsg || !state.currentLesson) return;
 
             input.value = '';
-            state.chatHistory.push({ role: 'user', text: msg });
+            stopSpeaking();
+            stopVoiceRecognition();
+
+            state.chatHistory.push({ role: 'user', text: userMsg });
             renderChatHistory();
 
-            const charObj = CHARACTERS[state.character] || CHARACTERS.genius;
-            const lessonContext = state.currentLesson ? JSON.stringify(state.currentLesson) : '';
-
-            const systemPrompt = `
-Anda ialah ${charObj.name} dalam aplikasi SOKRA. ${charObj.personaPrompt}
-Konteks pelajaran papan putih semasa: ${lessonContext}.
-Jawab soalan pelajar menggunakan kaedah Sokratik (bimbing pelajar berfikir, puji jawapan betul, betulkan kesilapan dengan lembut).
-Jika pelajar meminta lukisan rajah tambahan, sertakan kod SVG mudah dalam medan "extraSvg".
-Pulangkan JSON: { "reply": "jawapan dialog anda", "extraSvg": "" }`;
+            if (sendBtn) sendBtn.disabled = true;
+            const chatBox = document.getElementById('wsChatMessages');
+            const typingId = 'wsTutorTypingIndicator';
+            chatBox.insertAdjacentHTML('beforeend', `
+                <div id="${typingId}" class="flex items-center gap-2 text-xs text-indigo-700 font-medium px-2">
+                    <span class="animate-spin inline-block w-3.5 h-3.5 border-2 border-indigo-600 border-t-transparent rounded-full"></span>
+                    <span>${(CHARACTERS[state.character] || CHARACTERS.genius).name} sedang menulis &amp; melukis di papan putih...</span>
+                </div>
+            `);
+            chatBox.scrollTop = chatBox.scrollHeight;
 
             try {
+                const charObj = CHARACTERS[state.character] || CHARACTERS.genius;
+                const langMap = { ms: 'Bahasa Melayu', en: 'English', zh: 'Chinese (Mandarin)', ta: 'Tamil', ar: 'Arabic' };
+                const targetLang = langMap[state.language] || 'Bahasa Melayu';
+                const activeScene = state.currentLesson.scenes[state.currentStepIndex] || {};
+                const recentTurns = state.chatHistory.slice(-8).map(m => `${m.role === 'user' ? 'Pelajar' : charObj.name}: ${m.text}`).join('\n');
+
+                const sysPrompt = `
+Anda ialah ${charObj.name} dalam SOKRA (Tutor Papan Putih AI Interaktif 2 Hala seperti AhaBoard.ai).
+${charObj.personaPrompt}
+Bahasa pengajaran wajib: ${targetLang}.
+Topik pelajaran: "${state.currentLesson.title}".
+Papan putih aktif sekarang (#${state.currentStepIndex + 1}): "${activeScene.sceneTitle || ''}" — Konsep: "${activeScene.keyConceptBox || ''}".
+
+Sejarah perbualan terkini:
+${recentTurns}
+
+Tugasan 2 hala anda:
+1. Balas mesej/jawapan/soalan pelajar dengan responsif, mendalam dan membimbing (jika Mod Homework, semak cubaan pelajar & beri pembayang langkah seterusnya tanpa terus membocorkan semua jawapan).
+2. Jika pelajar meminta penerangan cara lain, lukisan rajah baharu, atau contoh tambahan, sertakan "newBoardScene" supaya aplikasi terus membuka Papan Putih Baharu (#${state.currentLesson.scenes.length + 1})! Jika hanya sambungan nota ringkas pada papan semasa, isikan "boardUpdateLines" dan tinggalkan "newBoardScene" sebagai null.
+Pulangkan HANYA JSON sah:
+{
+  "reply": "Jawapan lisan & penerangan mendalam tutor + soalan susulan 2 hala",
+  "quickChoices": ["Pilihan jawapan 1", "Pilihan jawapan 2"],
+  "boardUpdateLines": ["Catatan tambahan di papan semasa jika perlu"],
+  "newBoardScene": null
+}`;
+
                 const raw = await callGeminiWithFallback(
-                    [{ role: 'user', parts: [{ text: msg }] }],
-                    systemPrompt,
+                    [{ role: 'user', parts: [{ text: userMsg }] }],
+                    sysPrompt,
                     'application/json'
                 );
+
+                document.getElementById(typingId)?.remove();
                 const parsed = JSON.parse(raw.replace(/```json|```/g, '').trim());
-                const replyText = parsed.reply || 'Bagus! Mari kita teruskan.';
+                const replyText = parsed.reply || 'Mari kita teruskan langkah seterusnya!';
 
-                state.chatHistory.push({ role: 'tutor', text: replyText });
+                state.chatHistory.push({
+                    role: 'tutor',
+                    text: replyText,
+                    quickChoices: parsed.quickChoices || []
+                });
                 renderChatHistory();
-                speakTextWithCharacter(replyText);
 
-                if (parsed.extraSvg) {
+                if (parsed.newBoardScene && parsed.newBoardScene.sceneTitle) {
+                    state.currentLesson.scenes.push(parsed.newBoardScene);
+                    renderWorkspaceScene(state.currentLesson.scenes.length - 1, false);
+                } else if (Array.isArray(parsed.boardUpdateLines) && parsed.boardUpdateLines.length) {
                     const board = document.getElementById('wsBoardContent');
-                    board.insertAdjacentHTML('beforeend', `<div class="pt-3 border-t border-dashed border-slate-200">${parsed.extraSvg}</div>`);
+                    const linesHtml = parsed.boardUpdateLines.map(line =>
+                        `<div class="wb-hand-font text-xl sm:text-2xl text-indigo-900 pl-3 border-l-4 border-indigo-500">${escapeHtml(line)}</div>`
+                    ).join('');
+                    board.insertAdjacentHTML('beforeend', `
+                        <div class="max-w-2xl mx-auto mt-4 p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200 space-y-2">
+                            <div class="text-[11px] font-bold uppercase tracking-wider text-indigo-700">✍️ Tambahan Papan Putih</div>
+                            ${linesHtml}
+                        </div>
+                    `);
                     board.scrollTop = board.scrollHeight;
                 }
+
+                document.getElementById('wsBoardSpeechBubble').textContent = replyText;
+                speakTextWithCharacter(replyText, () => {
+                    if (state.twoWayAutoListen && !document.getElementById('workspaceModal').classList.contains('hidden')) {
+                        startTwoWayMicListen();
+                    }
+                });
             } catch (err) {
-                state.chatHistory.push({ role: 'tutor', text: `Maaf, sambungan terganggu: ${err.message}` });
+                document.getElementById(typingId)?.remove();
+                showToast(`Ralat dialog AI: ${err.message}`);
+            } finally {
+                if (sendBtn) sendBtn.disabled = false;
+            }
+        }
+
+        async function handleCheckStudentWorkImage(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+            event.target.value = '';
+
+            stopSpeaking();
+            stopVoiceRecognition();
+
+            try {
+                const dataUrl = await readFileAsDataUrl(file);
+                const base64Data = dataUrl.split(',')[1];
+                const mimeType = file.type || 'image/png';
+
+                state.chatHistory.push({
+                    role: 'user',
+                    text: `📸 [Memuat naik gambar jalan kerja: ${file.name}] Sila semak jalan kerja saya baris demi baris!`
+                });
                 renderChatHistory();
+
+                const chatBox = document.getElementById('wsChatMessages');
+                const typingId = 'checkWorkTyping';
+                chatBox.insertAdjacentHTML('beforeend', `
+                    <div id="${typingId}" class="flex items-center gap-2 text-xs text-amber-700 font-medium px-2">
+                        <span class="animate-spin inline-block w-3.5 h-3.5 border-2 border-amber-600 border-t-transparent rounded-full"></span>
+                        <span>${CHARACTERS[state.character].name} sedang menyemak setiap baris jalan kerja anda...</span>
+                    </div>
+                `);
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                const charObj = CHARACTERS[state.character] || CHARACTERS.genius;
+                const sysPrompt = `
+Anda ialah ${charObj.name} dalam SOKRA (fungsi Semak Jalan Kerja Pelajar seperti AhaBoard.ai).
+${charObj.personaPrompt}
+Topik semasa: "${state.currentLesson?.title || ''}".
+Pelajar memuat naik gambar jalan kerja tulisan tangan mereka.
+Tugasan anda:
+1. Baca setiap baris jalan kerja dalam gambar tersebut dengan teliti.
+2. Kenal pasti baris mana yang BETUL (✓) dan baris tepat di mana KESILAPAN berlaku (✗) serta terangkan *mengapa* ia silap.
+3. JANGAN terus bagi jawapan akhir bulat-bulat jika pelajar boleh membetulkannya sendiri—tunjukkan baris yang silap di papan putih dan minta pelajar membetulkan langkah itu!
+Pulangkan HANYA JSON sah:
+{
+  "reply": "Ulasan mesra & spesifik baris demi baris terhadap gambar jalan kerja pelajar + soalan untuk pelajar betulkan",
+  "boardHeading": "Semakan Jalan Kerja Pelajar",
+  "checkedLines": ["✓ Baris 1: Betul...", "✗ Baris 2: Kesilapan dikesan pada...", "💡 Pembayang pembetulan..."],
+  "quickChoices": ["Saya faham silap saya, jawapannya ialah...", "Terangkan lagi kenapa baris itu silap"]
+}`;
+
+                const raw = await callGeminiWithFallback(
+                    [{
+                        role: 'user',
+                        parts: [
+                            { text: 'Sila semak gambar jalan kerja saya ini baris demi baris dan tunjukkan di mana kesilapan saya jika ada.' },
+                            { inlineData: { mimeType, data: base64Data } }
+                        ]
+                    }],
+                    sysPrompt,
+                    'application/json'
+                );
+
+                document.getElementById(typingId)?.remove();
+                const parsed = JSON.parse(raw.replace(/```json|```/g, '').trim());
+                const replyText = parsed.reply || 'Saya sudah menyemak jalan kerja anda!';
+
+                state.chatHistory.push({
+                    role: 'tutor',
+                    text: replyText,
+                    quickChoices: parsed.quickChoices || []
+                });
+                renderChatHistory();
+
+                // Paparkan semakan baris demi baris terus di papan putih!
+                const board = document.getElementById('wsBoardContent');
+                const linesHtml = (parsed.checkedLines || []).map(line => {
+                    const isErr = line.includes('✗') || line.toLowerCase().includes('silap');
+                    return `<div class="wb-hand-font text-xl sm:text-2xl pl-3 border-l-4 ${isErr ? 'border-rose-500 text-rose-800 bg-rose-50/70 py-1 rounded-r-lg' : 'border-emerald-500 text-slate-900'}">${escapeHtml(line)}</div>`;
+                }).join('');
+
+                board.insertAdjacentHTML('beforeend', `
+                    <div class="max-w-2xl mx-auto mt-5 p-4 rounded-2xl bg-amber-50/80 border-2 border-amber-300 space-y-2.5">
+                        <div class="text-xs font-extrabold uppercase tracking-wider text-amber-800">🔍 ${escapeHtml(parsed.boardHeading || 'Semakan Jalan Kerja Anda')}</div>
+                        ${linesHtml}
+                    </div>
+                `);
+                board.scrollTop = board.scrollHeight;
+
+                document.getElementById('wsBoardSpeechBubble').textContent = replyText;
+                speakTextWithCharacter(replyText, () => {
+                    if (state.twoWayAutoListen && !document.getElementById('workspaceModal').classList.contains('hidden')) {
+                        startTwoWayMicListen();
+                    }
+                });
+            } catch (err) {
+                document.getElementById('checkWorkTyping')?.remove();
+                showToast(`Gagal menyemak gambar jalan kerja: ${err.message}`);
             }
         }
 
         // =========================================================================
-        // 11. KANVAS CONTENGAN PELAJAR & INPUT MIKROFON SUARA
+        // 11. KANVAS CONTENGAN PELAJAR & PENGECAMAN SUARA 2 HALA
         // =========================================================================
         function setupStudentDrawingCanvas() {
             const canvas = document.getElementById('studentDrawCanvas');
@@ -1830,6 +2471,7 @@ Pulangkan JSON: { "reply": "jawapan dialog anda", "extraSvg": "" }`;
             };
 
             const startDraw = (e) => {
+                if (!state.studentDrawEnabled) return;
                 drawing = true;
                 const p = getPos(e);
                 ctx.beginPath();
@@ -1837,10 +2479,10 @@ Pulangkan JSON: { "reply": "jawapan dialog anda", "extraSvg": "" }`;
             };
 
             const moveDraw = (e) => {
-                if (!drawing) return;
+                if (!drawing || !state.studentDrawEnabled) return;
                 if (e.cancelable) e.preventDefault();
                 const p = getPos(e);
-                ctx.lineWidth = 2.6;
+                ctx.lineWidth = 2.8;
                 ctx.lineCap = 'round';
                 ctx.strokeStyle = state.penColor;
                 ctx.lineTo(p.x, p.y);
@@ -1852,11 +2494,24 @@ Pulangkan JSON: { "reply": "jawapan dialog anda", "extraSvg": "" }`;
             canvas.addEventListener('mousedown', startDraw);
             canvas.addEventListener('mousemove', moveDraw);
             window.addEventListener('mouseup', endDraw);
-
             canvas.addEventListener('touchstart', startDraw, { passive: false });
             canvas.addEventListener('touchmove', moveDraw, { passive: false });
             canvas.addEventListener('touchend', endDraw);
             window.addEventListener('resize', resizeStudentCanvas);
+        }
+
+        function toggleStudentDrawMode() {
+            state.studentDrawEnabled = !state.studentDrawEnabled;
+            const canvas = document.getElementById('studentDrawCanvas');
+            const label = document.getElementById('drawModeLabel');
+            if (state.studentDrawEnabled) {
+                canvas.classList.remove('pointer-events-none');
+                label.textContent = 'Mod Conteng: Aktif';
+                showToast('Anda boleh menconteng terus di atas papan putih sekarang.');
+            } else {
+                canvas.classList.add('pointer-events-none');
+                label.textContent = 'Mod Conteng: Tutup';
+            }
         }
 
         function resizeStudentCanvas() {
@@ -1871,27 +2526,75 @@ Pulangkan JSON: { "reply": "jawapan dialog anda", "extraSvg": "" }`;
 
         function setPenColor(hex) {
             state.penColor = hex;
-            showToast('Warna pen ditukar');
+            if (!state.studentDrawEnabled) toggleStudentDrawMode();
         }
 
         function clearUserCanvas() {
             const canvas = document.getElementById('studentDrawCanvas');
             if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
         }
 
         let activeRecognition = null;
+
+        function stopVoiceRecognition() {
+            if (activeRecognition) {
+                try { activeRecognition.stop(); } catch (e) {}
+                activeRecognition = null;
+            }
+            document.getElementById('heroMicBtn')?.classList.remove('mic-listening-active', 'bg-rose-100', 'text-rose-700');
+            document.getElementById('wsMicBtn')?.classList.remove('mic-listening-active', 'bg-rose-600', 'text-white');
+        }
+
+        function startTwoWayMicListen() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) return;
+            stopVoiceRecognition();
+
+            const recog = new SpeechRecognition();
+            recog.lang = (I18N[state.language] || I18N.ms).speechLang;
+            recog.interimResults = false;
+
+            const wsMicBtn = document.getElementById('wsMicBtn');
+            wsMicBtn?.classList.add('mic-listening-active', 'bg-rose-600', 'text-white');
+
+            recog.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                if (transcript && transcript.trim()) {
+                    document.getElementById('wsChatInput').value = transcript;
+                    handleWsChatSubmit(new Event('submit'));
+                }
+            };
+
+            recog.onend = () => {
+                wsMicBtn?.classList.remove('mic-listening-active', 'bg-rose-600', 'text-white');
+                activeRecognition = null;
+            };
+
+            recog.onerror = () => {
+                wsMicBtn?.classList.remove('mic-listening-active', 'bg-rose-600', 'text-white');
+                activeRecognition = null;
+            };
+
+            activeRecognition = recog;
+            try { recog.start(); } catch (e) {}
+        }
+
         function toggleVoiceMic(target) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) {
-                showToast('Pelayar ini tidak menyokong pengecaman suara.');
+                showToast('Pelayar ini tidak menyokong input mikrofon.');
                 return;
             }
 
             if (activeRecognition) {
-                activeRecognition.stop();
-                activeRecognition = null;
+                stopVoiceRecognition();
+                return;
+            }
+
+            stopSpeaking();
+            if (target === 'workspace') {
+                startTwoWayMicListen();
                 return;
             }
 
@@ -1899,21 +2602,16 @@ Pulangkan JSON: { "reply": "jawapan dialog anda", "extraSvg": "" }`;
             recog.lang = (I18N[state.language] || I18N.ms).speechLang;
             recog.interimResults = false;
 
-            const btn = document.getElementById(target === 'hero' ? 'heroMicBtn' : 'wsMicBtn');
-            btn?.classList.add('mic-pulse', 'bg-rose-100', 'text-rose-700');
+            const btn = document.getElementById('heroMicBtn');
+            btn?.classList.add('mic-listening-active', 'bg-rose-100', 'text-rose-700');
 
             recog.onresult = (event) => {
                 const transcript = event.results[0][0].transcript;
-                if (target === 'hero') {
-                    document.getElementById('heroPromptInput').value = transcript;
-                } else {
-                    document.getElementById('wsChatInput').value = transcript;
-                    handleWsChatSubmit(new Event('submit'));
-                }
+                document.getElementById('heroPromptInput').value = transcript;
             };
 
             recog.onend = () => {
-                btn?.classList.remove('mic-pulse', 'bg-rose-100', 'text-rose-700');
+                btn?.classList.remove('mic-listening-active', 'bg-rose-100', 'text-rose-700');
                 activeRecognition = null;
             };
 
@@ -1929,7 +2627,6 @@ Pulangkan JSON: { "reply": "jawapan dialog anda", "extraSvg": "" }`;
                 .replace(/"/g, '&quot;');
         }
 
-        // Dedahkan semua fungsi ke global window untuk acara onclick HTML
         Object.assign(window, {
             openAdminPortal,
             closeAdminPortal,
@@ -1956,13 +2653,23 @@ Pulangkan JSON: { "reply": "jawapan dialog anda", "extraSvg": "" }`;
             quickStartIdea,
             startFromHero,
             closeWorkspace,
-            renderWorkspaceStep,
-            replayHandwritingStep,
+            renderWorkspaceScene,
+            replayCurrentScene,
+            prevWsScene,
             nextWsStep,
+            generateNextDynamicBoard,
+            exportLessonNotes,
             toggleVoice,
+            toggleTwoWayAutoListen,
+            toggleContinuousPlay,
+            switchLessonLanguageMidSession,
+            cutInAndSpeak,
             sendQuickReply,
-            triggerQuickQuiz,
+            triggerExamQuizMode,
+            handleCheckStudentWorkImage,
+            downloadFullWhiteboardHtml,
             handleWsChatSubmit,
+            toggleStudentDrawMode,
             setPenColor,
             clearUserCanvas,
             toggleVoiceMic
