@@ -534,6 +534,13 @@
 
         let apiKey = SOKRA_CONFIG.geminiApiKey || "";
 
+        function getGeminiEndpoint(modelName, key) {
+            if (key && key.startsWith('AQ.')) {
+                return `https://aiplatform.googleapis.com/v1/publishers/google/models/${modelName}:generateContent?key=${key}`;
+            }
+            return `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`;
+        }
+
         function refreshIcons() {
             if (window.lucide && typeof window.lucide.createIcons === 'function') {
                 window.lucide.createIcons();
